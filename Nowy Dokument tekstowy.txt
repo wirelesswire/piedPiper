@@ -1,4 +1,8 @@
-﻿
+// --- Inside PipelineSystem Class ---
+
+
+
+
 
 
 
@@ -7,7 +11,7 @@ using System;
 using System.Collections.Generic;
 
 // --- The Single Containing Class ---
-public partial class PipelineSystem
+public class PipelineSystem
 {
     // --- 1. Context Class (Nested) ---
     public class Context
@@ -82,6 +86,156 @@ public partial class PipelineSystem
             var result = currentProcessor.Process(input, context);
             context.Log($"Terminal processor finished.");
             return result;
+        }
+    }
+
+    // --- 6. Wrapper Pipeline Implementation (Nested) ---
+    // Represents subsequent steps in the pipeline (the decorator)
+    public class Pipeline<InputType, ProcessorInputType, OutputType> : PipelineBase<InputType, ProcessorInputType, OutputType>
+    {
+        // Reference to the previous part of the pipeline
+        private readonly IPipeline<InputType, ProcessorInputType> previousPipeline;
+
+        public Pipeline(
+            IProcessor<ProcessorInputType, OutputType> processor,
+            IPipeline<InputType, ProcessorInputType> previousPipeline)
+            : base(processor) // Pass processor to base constructor
+        {
+            if (previousPipeline == null) throw new ArgumentNullException(nameof(previousPipeline));
+            this.previousPipeline = previousPipeline;
+        }
+
+        /// <summary>
+        /// Executes the previous pipeline steps first, then the current processor.
+        /// </summary>
+        public override OutputType ExecuteSubPipeline(InputType input, Context context)
+        {
+            context.Log($"Executing previous pipeline segment(s)...");
+            // 1. Execute the pipeline built so far
+            var previousPipelineResult = previousPipeline.ExecuteSubPipeline(input, context);
+
+            context.Log($"Executing intermediate processor: {currentProcessor.GetType().Name}");
+            // 2. Process the result with the current processor
+            var result = currentProcessor.Process(previousPipelineResult, context);
+            context.Log($"Intermediate processor finished.");
+            return result;
+        }
+    }
+
+
+
+    // --- 8. Example Processors (Nested) ---
+    public class FloatToStringProcessor : IProcessor<float, string>
+    {
+        public string Process(float input, Context context)
+        {
+            context.Log($"Processing {input} in FloatToStringProcessor.");
+            string result = input.ToString(); // Example: Simple conversion
+            context.Log($"Result: {result}");
+            return result;
+        }
+    }
+
+    public class RepeatStringProcessor : IProcessor<string, string>
+    {
+        public string Process(string input, Context context)
+        {
+            context.Log($"Processing '{input}' in RepeatStringProcessor.");
+            if (string.IsNullOrEmpty(input))
+            {
+                context.Log($"Input is null or empty, returning as is.");
+                return input; // Example of conditional processing
+            }
+            string result = input + input + input; // Example: Repeat 3 times
+            context.Log($"Result: {result}");
+            return result;
+        }
+    }
+
+
+
+
+
+
+
+    // 1. Define a new interface that includes AppendProcessor
+    public interface IBuildablePipeline<InputType, OutputType> : IPipeline<InputType, OutputType>
+    {
+        // Crucially, this returns the IBuildablePipeline interface itself, enabling chaining
+        IBuildablePipeline<InputType, NextOutputType> AppendProcessor<NextOutputType>(IProcessor<OutputType, NextOutputType> processor);
+    }
+
+    // 2. Modify PipelineBase
+    // Make it implement the new interface
+    public abstract class PipelineBase<InputType, ProcessorInputType, OutputType> : IBuildablePipeline<InputType, OutputType>
+    {
+        protected IProcessor<ProcessorInputType, OutputType> currentProcessor;
+
+        public PipelineBase(IProcessor<ProcessorInputType, OutputType> processor)
+        {
+            if (processor == null) throw new ArgumentNullException(nameof(processor));
+            currentProcessor = processor;
+        }
+
+        // CHANGE THE RETURN TYPE HERE to IBuildablePipeline
+        public IBuildablePipeline<InputType, ProcessorOutputType> AppendProcessor<ProcessorOutputType>(IProcessor<OutputType, ProcessorOutputType> processor)
+        {
+            // The concrete Pipeline class will implement IBuildablePipeline
+            return new Pipeline<InputType, OutputType, ProcessorOutputType>(processor, this);
+        }
+
+        // Execute and ExecuteSubPipeline remain as they implement the base IPipeline part
+        public OutputType Execute(InputType input, out Context context)
+        {
+            context = new Context();
+            context.ProcessStartedAt = DateTime.Now;
+            context.Log("Pipeline execution started.");
+            OutputType result;
+            try
+            {
+                result = ExecuteSubPipeline(input, context);
+                context.Log("Pipeline execution finished successfully.");
+            }
+            catch (Exception ex)
+            {
+                context.Log($"Pipeline execution failed: {ex.Message}");
+                context.ProcessEndedAt = DateTime.Now;
+                throw;
+            }
+            context.ProcessEndedAt = DateTime.Now;
+            context.Log($"Total execution time: {context.ProcessTimeInMilliseconds} ms.");
+            return result;
+        }
+
+        public abstract OutputType ExecuteSubPipeline(InputType input, Context context);
+    }
+
+
+
+
+    // 5. Modify Static Factory Class
+    public static class Pipeline
+    {
+        // CHANGE THE RETURN TYPE HERE to IBuildablePipeline
+        public static IBuildablePipeline<InputType, OutputType> Create<InputType, OutputType>(IProcessor<InputType, OutputType> processor)
+        {
+            return new TerminalPipeline<InputType, OutputType>(processor);
+        }
+    }
+    // Add this class inside the PipelineSystem class, alongside the others
+    public class StringLengthProcessor : IProcessor<string, int> // Takes string, outputs int
+    {
+        public int Process(string input, Context context)
+        {
+            context.Log($"Processing '{input}' in StringLengthProcessor.");
+            if (input == null)
+            {
+                context.Log("Input string is null, returning length 0.");
+                return 0;
+            }
+            int length = input.Length;
+            context.Log($"Calculated length: {length}");
+            return length;
         }
     }
 
