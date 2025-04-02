@@ -3,6 +3,7 @@
 
 
 
+using piedPiper;
 using System;
 using System.Collections.Generic;
 
@@ -223,8 +224,41 @@ public partial class PipelineSystem
     // --- Now the direct chaining in Main should work ---
     public class Program
     {
+        static string inputImagePath = "blurry-moon.tif"; // <--- CHANGE TO YOUR INPUT IMAGE PATH
+        static string outputDirectory = "output";
+        static string intermediateBaseName = "processed_step";
+        static string finalBaseName = "final_output";
+        public static void mainforimaghes()
+        {
+            var pipeline = Pipeline.Create(new PathToBitmapProcessor())
+                .AppendProcessor(new ConvolutionProcessor("srednia", new float[,] {
+                    { 1, 1, 1},
+                    { 1, 1, 1 },
+                    { 1, 1, 1} },1,1))
+                .AppendProcessor(new LaplacianProcessor())
+                .AppendProcessor(new BitmapSaveProcessor(outputDirectory, intermediateBaseName, ".png"));
+            Context ctx;
+            //try
+            //{
+                var result = pipeline.Execute(inputImagePath, out ctx); // Execute is part of IPipeline, which IBuildablePipeline inherits
+
+                Console.WriteLine("\n--- Execution Summary ---");
+                Console.WriteLine($"Pipeline final result: {result}");
+                Console.WriteLine($"Pipeline execution took {ctx.ProcessTimeInMilliseconds} milliseconds");
+                Console.WriteLine("\n--- Execution Logs ---");
+                foreach (var log in ctx.Logs) { Console.WriteLine(log); }
+            //}
+            //catch (Exception ex) {
+            //    Console.WriteLine(ex);
+            //    /* ... error handling ... */ }
+            Console.WriteLine("\nPipeline execution finished.");
+        }
+
+
         public static void Main()
         {
+            mainforimaghes();
+            return;
             bool a = true;
 
             if (a)
