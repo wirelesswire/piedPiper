@@ -1,9 +1,9 @@
-﻿namespace FuzzySharp.MembershipFunctions
+﻿using System.Numerics;
+
+namespace FuzzySharp.MembershipFunctions
 {
-    public interface IMembershipFunction
+    public interface IMembershipFunction<T> where T : INumber<T>
     {
-        public abstract float CalculateMemberships(float value);
-        
-        public abstract void SetUpBorder(float a, float b, float? c, float? d);
+        public abstract T CalculateMembership(T x);
     }
 }
