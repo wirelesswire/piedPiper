@@ -1,40 +1,48 @@
-﻿namespace FuzzySharp.MembershipFunctions.Functions
+﻿using System;
+using System.Numerics;
+
+namespace FuzzySharp.MembershipFunctions.Functions
 {
-    public class TriangleMembershipFunction : IMembershipFunction
+    public class TriangleMembershipFunction<T> : BaseMembershipFunction<T> where T : INumber<T>
     {
-        private float? a;
-        private float? b;
-        private float? c;
+        private T _bottomBorder;
+        private T _topBorder;
+        private T _trianglePeak;
 
-        public float CalculateMemberships(float x)
+        public TriangleMembershipFunction(T a, T b, T c) : base()
         {
-            if (x < a || x > b) 
+            if (a > b || b > c)
             {
-                return 0;
+                throw new InvalidDataException($"Values should satisfy a <= b <= c: {a} < {c} < {b}");
             }
 
-            if (x >= a && x <= c) 
-            {
-                return (x - a.Value) / (c.Value - a.Value);
-            }
-
-            return (b!.Value - x) / (b.Value - c!.Value);
+            _bottomBorder = a;
+            _trianglePeak = b;
+            _topBorder = c;
         }
 
-        public void SetUpBorder(float a, float b, float? c, float? d)
+        public TriangleMembershipFunction(List<T> args) : base(args)
         {
-            if (a > c || c > b) 
+            ValidateArgs<T>(args, 3);
+
+            _bottomBorder = args[0];
+            _topBorder = args[1];
+            _trianglePeak = args[2];
+        }
+
+        public override T CalculateMembership(T x)
+        {
+            if (OutOfBorders(x, _bottomBorder, _topBorder))
             {
-                throw new InvalidDataException($"Bad borders setup values should satisfy {a} < {c} < {b}");
-            }
-            if (c is null)
-            {
-                throw new InvalidDataException($"Thrid value cannot be null");
+                return T.Zero;
             }
 
-            this.a = a;
-            this.b = b;
-            this.c = c;
+            if (x >= _bottomBorder && x <= _trianglePeak)
+            {
+                return (x - _bottomBorder) / (_trianglePeak - _bottomBorder);
+            }
+
+            return (_topBorder - x) / (_topBorder - _trianglePeak);
         }
     }
 }
