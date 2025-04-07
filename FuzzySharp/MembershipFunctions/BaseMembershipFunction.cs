@@ -1,19 +1,18 @@
-﻿using System.Numerics;
-
-namespace FuzzySharp.MembershipFunctions
+﻿namespace FuzzySharp.MembershipFunctions
 {
     public abstract class BaseMembershipFunction<T> : IMembershipFunction<T> where T : INumber<T>
     {
-        public BaseMembershipFunction() { }
+        protected BaseMembershipFunction() { }
 
-        public BaseMembershipFunction(List<T> value) { }
+        protected BaseMembershipFunction(List<T> value) { }
 
         public abstract T CalculateMembership(T x);
 
+        public abstract List<T> Introduce();
+
         protected bool OutOfBorders(T x, T bottom, T top) => x < bottom || x > top;
 
-        //tylko propozycja na zrobienie wspólnego konstruktora dla kazdej funkcji przynaleznosci, to co proponowales w StepMembershipFunction
-        protected void ValidateArgs<I>(List<T> args, int count) where I : INumber<T>
+        protected void ValidateArgs<I>(List<T> args, int count) where I : INumber<I>
         {
             if (args.Count != count) 
             {

@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <Folder Include="Exceptions\" />
+    <Folder Include="Operators\TNorm\" />
+    <Folder Include="Operators\SNorm\" />
   </ItemGroup>
 
 </Project>

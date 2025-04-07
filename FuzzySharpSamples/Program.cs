@@ -1,4 +1,5 @@
 ﻿using FuzzySharp;
+using FuzzySharp.MembershipFunctions;
 using FuzzySharp.MembershipFunctions.Functions;
 
 namespace FuzzySharpSamples
@@ -7,15 +8,32 @@ namespace FuzzySharpSamples
     {
         static void Main(string[] args)
         {
-            var elo = new TriangleMembershipFunction<double>(3.3, 5, 7.2);
-            var elo1 = new TriangleMembershipFunction<float>(3.3f, 5f, 7.2f);
-            var elo2 = new TriangleMembershipFunction<decimal>(3.3M, 5M, 7.2M);
+            float LeftFunc(float x)
+            {
+                return float.CreateTruncating(Math.Abs(Math.Cos(x)));
+            }
 
-            var elo3 = new TrapezeMembersipFunction<decimal>(1,2,3,4);
-            var elo4 = new TrapezeMembersipFunction<decimal>(new List<decimal>() {1, 2, 3, 4});
-            var elo5 = new GaussMembershipFunction<decimal>(3.3M, 2, 7);
-            var elo6 = new GaussMembershipFunction<decimal>(new List<decimal>() { 1, 2, 3, 4, 5 });
+            float RightFunc(float x)
+            {
+                return float.CreateTruncating(Math.Abs(Math.Sin(x)));
+            }
 
+            var mbFunction1 = new TrapezeMembershipFunction<float>(1,2,3,4);
+            var mbFunction2 = new GaussMembershipFunction<float>(2.5f,2,3);
+            var mbFunction3 = new TriangleMembershipFunction<float>(1,2.5f,4);
+            var mbFunction4 = new BellMembershipFunction<float>(2,2,3);
+            var mbFunction5 = new SigmoidMembershipFunction<float>(2.5f, 1);
+            var mbFunction6 = new LeftRightMembershipFunction<float>(2.5f, 1, 1, LeftFunc, RightFunc);
+            var mbFunction7 = new BinaryMembershipFunction<float>(2.5f, true);
+            var mbFunction8 = new ZadehMembershipFunction<float>(2.5f);
+
+            List<IMembershipFunction<float>> list = [mbFunction1, mbFunction2, mbFunction3, mbFunction4, mbFunction5, mbFunction6, mbFunction7, mbFunction8];
+
+            foreach (var mbFunction in list)
+            {
+                Console.WriteLine($"Membership (1.5): {mbFunction.CalculateMembership(1.5f)}");
+                Console.WriteLine($"Membership (2.5): {mbFunction.CalculateMembership(2.5f)}");
+            }
 
             Console.WriteLine("Hello, World!");
         }
