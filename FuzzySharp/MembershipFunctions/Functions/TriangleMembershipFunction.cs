@@ -1,24 +1,21 @@
-﻿using System;
-using System.Numerics;
-
-namespace FuzzySharp.MembershipFunctions.Functions
+﻿namespace FuzzySharp.MembershipFunctions.Functions
 {
     public class TriangleMembershipFunction<T> : BaseMembershipFunction<T> where T : INumber<T>
     {
-        private T _bottomBorder;
-        private T _topBorder;
-        private T _trianglePeak;
+        private readonly T _bottomBorder;
+        private readonly T _topBorder;
+        private readonly T _trianglePeak;
 
-        public TriangleMembershipFunction(T a, T b, T c) : base()
+        public TriangleMembershipFunction(T bottomBorder, T trianglePeak, T topBorder)
         {
-            if (a > b || b > c)
+            if (bottomBorder > trianglePeak || trianglePeak > topBorder)
             {
-                throw new InvalidDataException($"Values should satisfy a <= b <= c: {a} < {c} < {b}");
+                throw new InvalidDataException($"Values should satisfy bottomBorder <= trianglePeak <= topBorder: {bottomBorder} < {topBorder} < {trianglePeak}");
             }
 
-            _bottomBorder = a;
-            _trianglePeak = b;
-            _topBorder = c;
+            _bottomBorder = bottomBorder;
+            _trianglePeak = trianglePeak;
+            _topBorder = topBorder;
         }
 
         public TriangleMembershipFunction(List<T> args) : base(args)
@@ -43,6 +40,11 @@ namespace FuzzySharp.MembershipFunctions.Functions
             }
 
             return (_topBorder - x) / (_topBorder - _trianglePeak);
+        }
+
+        public override List<T> Introduce()
+        {
+            return [_bottomBorder, _trianglePeak, _topBorder];
         }
     }
 }

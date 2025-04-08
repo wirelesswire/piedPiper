@@ -1,19 +1,16 @@
-﻿using System.Numerics;
-using System.Runtime.CompilerServices;
-
-namespace FuzzySharp.MembershipFunctions.Functions
+﻿namespace FuzzySharp.MembershipFunctions.Functions
 {
     public class GaussMembershipFunction<T> : BaseMembershipFunction<T> where T : INumber<T>
     {
-        private T _centre;
-        private T _width;
-        private T _fuzzificationFactor;
+        private readonly T _centre;
+        private readonly T _width;
+        private readonly T _factor;
 
-        public GaussMembershipFunction(T a, T b, T c) : base()
+        public GaussMembershipFunction(T centre, T width, T factor)
         {
-            _centre = a;
-            _width = b;
-            _fuzzificationFactor = c;
+            _centre = centre;
+            _width = width;
+            _factor = factor;
         }
         public GaussMembershipFunction(List<T> args) : base(args)
         {
@@ -24,21 +21,23 @@ namespace FuzzySharp.MembershipFunctions.Functions
 
             _centre = args[0];
             _width = args[1];
-            _fuzzificationFactor = args[2];
+            _factor = args[2];
         }
 
         public override T CalculateMembership(T x)
         {
-            T value = ((x - _centre) / _width);
-
             return T.CreateTruncating(
                 Math.Exp(-(1 / 2) 
                 * Math.Pow(
                     Math.Abs(
-                        double.CreateTruncating(value)), 
-                    double.CreateTruncating(_fuzzificationFactor)))
+                        double.CreateTruncating((x - _centre) / _width)), 
+                    double.CreateTruncating(_factor)))
                 );
-            //https://www.youtube.com/watch?v=6NXnxTNIWkc 1:24
+        }
+
+        public override List<T> Introduce()
+        {
+            return [_centre, _width, _factor];
         }
     }
 }

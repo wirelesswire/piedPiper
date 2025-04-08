@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FuzzySharp.MembershipFunctions.Functions
+﻿namespace FuzzySharp.MembershipFunctions.Functions
 {
     public class BellMembershipFunction<T> : BaseMembershipFunction<T> where T : INumber<T>
     {
-        private T _centre;
-        private T _width;
-        private T _slopes;
+        private readonly T _centre;
+        private readonly T _width;
+        private readonly T _slopes;
 
-        public BellMembershipFunction(T a, T b, T c, T d) : base()
+        public BellMembershipFunction(T width, T slopes, T centre)
         {
-            _centre = c;
-            _width = a;
-            _slopes = b;
+            _centre = centre;
+            _width = width;
+            _slopes = slopes;
         }
+
         public BellMembershipFunction(List<T> args) : base(args)
         {
             if (args.Count != 3)
@@ -28,7 +22,7 @@ namespace FuzzySharp.MembershipFunctions.Functions
 
             _centre = args[0];
             _width = args[1];
-            _=_slopes = args[2];
+            _slopes = args[2];
         }
 
         public override T CalculateMembership(T x)
@@ -36,12 +30,15 @@ namespace FuzzySharp.MembershipFunctions.Functions
             return T.CreateTruncating(
                 1 / 
                     (1 + Math.Pow(
-                        Math.Abs(
-                            double.CreateTruncating(x - _centre) / 
-                            double.CreateTruncating(_slopes)),
+                        Math.Abs(double.CreateTruncating((x - _centre) / _width)),
                         2*double.CreateTruncating(_slopes))
                     )
             );
+        }
+
+        public override List<T> Introduce()
+        {
+            return [_centre, _width, _slopes];
         }
     }
 }
