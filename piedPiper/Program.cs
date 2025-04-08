@@ -6,6 +6,11 @@
 using piedPiper;
 using System;
 using System.Collections.Generic;
+using FuzzySharp;
+using System.Reflection.Metadata;
+using FuzzySharp.MembershipFunctions.Functions;
+
+
 
 // --- The Single Containing Class ---
 public partial class PipelineSystem
@@ -123,14 +128,28 @@ public partial class PipelineSystem
         }
 
     }
-    public class HipekHeightProcessor : IProcessor<ocenionyHipek, ocenionyHipek>
+    public class HipekHeightProcessor :TriangleMembershipFunction<float > ,  IProcessor <ocenionyHipek, ocenionyHipek>
     {
         private float waga = 0;
+        private TriangleMembershipFunction<float> triangleMembershipFunction;
 
-        public HipekHeightProcessor(float waga)
+        //public HipekHeightProcessor(List<float> args) : base(args)
+        //{
+        //    //waga = 1;
+
+
+        //}
+
+        public HipekHeightProcessor(float a, float b, float c,float waga) : base(a, b, c)
         {
-            this.waga = waga;   
+            waga = 1;
+            this.triangleMembershipFunction = new TriangleMembershipFunction<float>(a, b, c);
         }
+
+        //public HipekHeightProcessor(float waga)
+        //{
+        //    this.waga = waga;   
+        //}
 
         public ocenionyHipek Process(ocenionyHipek input, Context context)
         {
@@ -139,10 +158,10 @@ public partial class PipelineSystem
                 throw new ArgumentNullException("input");
             }
 
-            if(input.hipek.height > 170)
-            {
-                input.ocena += 1*waga;
-            }
+            //if(input.hipek.height > 170)
+            //{
+                input.ocena += 1*triangleMembershipFunction.CalculateMembership(input.hipek.height);
+            //}
 
             return input;
 
@@ -219,7 +238,7 @@ public partial class PipelineSystem
 
 
 
-
+   
 
     // --- Now the direct chaining in Main should work ---
     public class Program
@@ -257,8 +276,8 @@ public partial class PipelineSystem
 
         public static void Main()
         {
-            mainforimaghes();
-            return;
+            //mainforimaghes();
+            //return;
             bool a = true;
 
             if (a)
@@ -276,15 +295,14 @@ public partial class PipelineSystem
                 var pipeline = PipelineSystem.Pipeline // Create returns IBuildablePipeline
                     .Create(new HipekProcessorInput()) // Result: IBuildablePipeline<float, string>
                     .AppendProcessor(new HipekEyeProcessor(1)) // Called on IBuildablePipeline, returns IBuildablePipeline<float, string>
-                    .AppendProcessor(new HipekHeightProcessor(1))
+                    .AppendProcessor(new HipekHeightProcessor(0.5f,0.7f,1f,1))
                     .AppendProcessor(new HipekHairProcessor(1))
                     .AppendProcessor(new HipekOcenaOgolnaProcessor(2))
 
                     ; // Called on IBuildablePipeline, returns IBuildablePipeline<float, int>
 
-                Console.WriteLine("Executing extended pipeline with input: 5.0f");
+                //Console.WriteLine("Executing extended pipeline with input: 5.0f");
                 Console.WriteLine($"Expected final output type: {pipeline.GetType().GenericTypeArguments[2]}"); // Check the inferred type
-
 
                 PipelineSystem.Context ctx;
                 try
@@ -299,9 +317,6 @@ public partial class PipelineSystem
                 }
                 catch (Exception ex) { /* ... error handling ... */ }
                 Console.WriteLine("\nPipeline execution finished.");
-
-
-
             }
             else
             {
