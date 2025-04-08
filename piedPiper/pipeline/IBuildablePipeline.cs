@@ -19,12 +19,6 @@ public partial class PipelineSystem
     //}
 
 
-
-
-
-
-
-    // 1. Define a new interface that includes AppendProcessor
     public interface IBuildablePipeline<InputType, OutputType> : IPipeline<InputType, OutputType>
     {
         // Crucially, this returns the IBuildablePipeline interface itself, enabling chaining

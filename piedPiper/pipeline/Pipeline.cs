@@ -2,8 +2,15 @@
 
 public partial class PipelineSystem
 {
-    // --- 6. Wrapper Pipeline Implementation (Nested) ---
-    // Represents subsequent steps in the pipeline (the decorator)
+
+    public static class Pipeline
+    {
+        
+        public static IBuildablePipeline<InputType, OutputType> Create<InputType, OutputType>(IProcessor<InputType, OutputType> processor)
+        {
+            return new TerminalPipeline<InputType, OutputType>(processor);
+        }
+    }
     public class Pipeline<InputType, ProcessorInputType, OutputType> : PipelineBase<InputType, ProcessorInputType, OutputType>
     {
         // Reference to the previous part of the pipeline
@@ -34,4 +41,5 @@ public partial class PipelineSystem
             return result;
         }
     }
+
 }

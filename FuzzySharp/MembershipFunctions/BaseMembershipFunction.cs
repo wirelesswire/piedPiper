@@ -6,6 +6,22 @@
 
         protected BaseMembershipFunction(List<T> value) { }
 
+        // dodałem dla testu może calculate będzie private potem 
+        public T GetMembership(T x) 
+        {
+            T membershipValue = CalculateMembership(x); 
+            
+            double membershipValueDouble = Convert.ToDouble(membershipValue); 
+
+            if (membershipValueDouble< 0.0 || membershipValueDouble> 1.0)
+            {
+                throw new InvalidDataException($"Membership function must return a value between 0.0 and 1.0 (inclusive). Got {membershipValue}");
+            }
+
+            return membershipValue; 
+        }
+
+
         public abstract T CalculateMembership(T x);
 
         public abstract List<T> Introduce();
