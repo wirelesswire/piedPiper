@@ -16,7 +16,7 @@
             _crossPoint = args[0];
         }
 
-        public override T CalculateMembership(T x)
+        protected override T CalculateMembership(T x)
         {
             return T.One / (T.One + (x - _crossPoint) * (x - _crossPoint));
         }

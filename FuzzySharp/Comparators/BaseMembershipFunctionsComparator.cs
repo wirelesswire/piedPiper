@@ -2,7 +2,7 @@
 
 namespace FuzzySharp.Comparators
 {
-    public class BaseComparator
+    public class BaseMembershipFunctionsComparator
     {
         public static bool Compare<T>(IMembershipFunction<T> first, IMembershipFunction<T> second) where T : INumber<T>
         {

@@ -1,6 +1,6 @@
 ﻿namespace FuzzySharp.Operators.TNorm
 {
-    public class NormOperationYagerOperator<T> (double b) : INormOperation<T> where T : INumber<T>
+    public class NormOperationYagerOperatorComplement<T> (double b) : INormOperation<T> where T : INumber<T>
     {
         public T Calculate(T x, T y)
         {

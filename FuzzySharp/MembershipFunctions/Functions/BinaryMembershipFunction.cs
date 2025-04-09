@@ -2,7 +2,7 @@
 {
     public class BinaryMembershipFunction<T>(T crossPoint, bool inclusive) : BaseMembershipFunction<T> where T : INumber<T>
     {
-        public override T CalculateMembership(T x)
+        protected override T CalculateMembership(T x)
         {
             return inclusive ? 
                 (x <= crossPoint ? T.One : T.Zero) : 

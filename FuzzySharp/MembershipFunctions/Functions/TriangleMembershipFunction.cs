@@ -27,12 +27,8 @@
             _trianglePeak = args[2];
         }
 
-        public override T CalculateMembership(T x)
+        protected override T CalculateMembership(T x)
         {
-            //return   T.One+T.One;
-            //return T.Zero -  T.One;
-
-
             if (OutOfBorders(x, _bottomBorder, _topBorder))
             {
                 return T.Zero;

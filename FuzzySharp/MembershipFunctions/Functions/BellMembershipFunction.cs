@@ -25,7 +25,7 @@
             _slopes = args[2];
         }
 
-        public override T CalculateMembership(T x)
+        protected override T CalculateMembership(T x)
         {
             return T.CreateTruncating(
                 1 / 

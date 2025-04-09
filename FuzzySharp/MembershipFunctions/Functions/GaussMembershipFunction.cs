@@ -24,7 +24,7 @@
             _factor = args[2];
         }
 
-        public override T CalculateMembership(T x)
+        protected override T CalculateMembership(T x)
         {
             return T.CreateTruncating(
                 Math.Exp(-(1 / 2) 
