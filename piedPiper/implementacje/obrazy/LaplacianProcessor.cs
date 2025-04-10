@@ -18,15 +18,7 @@ namespace piedPiper.implementacje.obrazy
             { 1, -4,  1 },
             { 0,  1,  0 }
         };
-        // Alternative kernel:
-        /*
-        private static readonly float[,] LaplacianKernel = new float[,]
-        {
-            { -1, -1, -1 },
-            { -1,  8, -1 },
-            { -1, -1, -1 }
-        };
-        */
+
 
 
         // Could reuse ConvolutionProcessor internally, but implementing directly for clarity
