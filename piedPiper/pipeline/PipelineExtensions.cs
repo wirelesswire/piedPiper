@@ -30,16 +30,14 @@ namespace piedPiper.pipeline
             public static IEnumerable<PipelineExecutionResult<InputType, OutputType>> ExecuteBatchParallel<InputType, OutputType>(
                 this PipelineSystem.IPipeline<InputType, OutputType> pipeline,
                 IEnumerable<InputType> inputs,
-                int maxDegreeOfParallelism = -1)
+                int? maxDegreeOfParallelism = null  )
             {
                 var results = new ConcurrentBag<PipelineExecutionResult<InputType, OutputType>>();
+;
 
-                var parallelOptions = new ParallelOptions
-                {
-                    MaxDegreeOfParallelism = maxDegreeOfParallelism
-                };
-
-                Parallel.ForEach(inputs, parallelOptions, input =>
+                Parallel.ForEach(inputs, new ParallelOptions {
+                    MaxDegreeOfParallelism = maxDegreeOfParallelism != null ? maxDegreeOfParallelism.Value : -1
+                }, input =>
                 {
                     PipelineSystem.Context context = null;
                     OutputType output = default;
