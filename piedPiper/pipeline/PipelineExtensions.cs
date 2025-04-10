@@ -26,8 +26,8 @@ namespace piedPiper.pipeline
             /// <param name="pipeline">The pipeline to execute.</param>
             /// <param name="inputs">The collection of inputs to process.</param>
             /// <param name="maxDegreeOfParallelism">Optional: Limits the number of concurrent operations. -1 means no limit (default).</param>
-            /// <returns>A list of results, one for each input item, including output, context, and any exceptions.</returns>
-            public static List<PipelineExecutionResult<InputType, OutputType>> ExecuteBatchParallel<InputType, OutputType>(
+            /// <returns>An enumerable of results, one for each input item, including output, context, and any exceptions.</returns>
+            public static IEnumerable<PipelineExecutionResult<InputType, OutputType>> ExecuteBatchParallel<InputType, OutputType>(
                 this PipelineSystem.IPipeline<InputType, OutputType> pipeline,
                 IEnumerable<InputType> inputs,
                 int maxDegreeOfParallelism = -1)
@@ -74,7 +74,7 @@ namespace piedPiper.pipeline
                     ));
                 });
 
-                return results.ToList();
+                return results;
             }
         }
 
