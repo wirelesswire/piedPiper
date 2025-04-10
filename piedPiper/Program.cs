@@ -109,10 +109,20 @@ public partial class PipelineSystem
             Context ctx;
             //try
             //{
+            //Console.WriteLine( Directory.GetFiles());
+
+            string currentDirectory = Directory.GetCurrentDirectory();
+
+            string searchPattern = "*.tif";
+
+            IEnumerable<string> tifFiles = Directory.EnumerateFiles(currentDirectory, searchPattern);
+
             string[] inputs = {"blurry-moon.tif","bonescan.tif"};
+            inputs = tifFiles.ToArray();
+            DateTime start = DateTime.Now;  
 
 
-            if (false )
+            if (false   )
             {
                 foreach (var inputImagePath in inputs)
                 {
@@ -134,7 +144,7 @@ public partial class PipelineSystem
             else
             {
 
-                List<PipelineExtensions.PipelineExecutionResult<string, string>> batchResults = pipeline.ExecuteBatchParallel(inputs,3); // Or ExecuteBatchParallel(imagePaths, 4) to limit to 4 threads
+                List<PipelineExtensions.PipelineExecutionResult<string, string>> batchResults = pipeline.ExecuteBatchParallel(inputs).ToList(); // Or ExecuteBatchParallel(imagePaths, 4) to limit to 4 threads
 
                 foreach (var item in batchResults)
                 {
@@ -150,8 +160,12 @@ public partial class PipelineSystem
                 }
             }
 
+            DateTime end = DateTime.Now;
 
-          
+            Console.WriteLine($"Total execution time of program: {(end - start).TotalMilliseconds} milliseconds");
+
+
+
         }
 
 
