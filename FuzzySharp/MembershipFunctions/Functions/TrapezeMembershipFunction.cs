@@ -30,7 +30,7 @@
             _topBorder = args[3];
         }
 
-        public override T CalculateMembership(T x)
+        protected override T CalculateMembership(T x)
         {
             if (OutOfBorders(x, _bottomBorder, _topBorder))
             {

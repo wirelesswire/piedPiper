@@ -31,8 +31,8 @@ namespace FuzzySharpSamples
 
             foreach (var mbFunction in list)
             {
-                Console.WriteLine($"Membership (1.5): {mbFunction.CalculateMembership(1.5f)}");
-                Console.WriteLine($"Membership (2.5): {mbFunction.CalculateMembership(2.5f)}");
+                Console.WriteLine($"Membership (1.5): {mbFunction.GetMembership(1.5f)}");
+                Console.WriteLine($"Membership (2.5): {mbFunction.GetMembership(2.5f)}");
             }
 
             Console.WriteLine("Hello, World!");

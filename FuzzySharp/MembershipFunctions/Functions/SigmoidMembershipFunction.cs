@@ -22,7 +22,7 @@
             _slope = args[2];
         }
 
-        public override T CalculateMembership(T x)
+        protected override T CalculateMembership(T x)
         {
             return T.CreateTruncating(1 / (1 + Math.Exp(double.CreateTruncating(-_slope * (x - _crossover)))));
         }

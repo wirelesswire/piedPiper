@@ -1,37 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FuzzySharp.MembershipFunctions.Functions
+﻿namespace FuzzySharp.MembershipFunctions.Functions
 {
-    //internal class stepMembershipFunction<T> : IMembershipFunction
-    //{
-    //    List<float[]> _f = new List<float[]>();
+    public class StepMembershipFunction<T> : BaseMembershipFunction<T> where T : INumber<T>
+    {
+        private readonly List<T> _steps;
 
+        public StepMembershipFunction(List<T> args) : base(args)
+        {
+            ValidateArgs<T>(args, args.Count);
+            args.Reverse();
+            _steps = args;
+        }
 
-    //    // float <od, value >
-    //    public stepMembershipFunction(float od , float do1 , List<float[]> f)
-    //    {
-    //        this._f = f;
-    //    }
+        protected override T CalculateMembership(T x)
+        {
+            foreach (var step in _steps.Select((value, i) => new { i, value }))
+            {
+                if (x >= step.value)
+                {
+                    return T.CreateTruncating((_steps.Count - step.i) * (1 / _steps.Count));
+                }
+            }
 
-    //    public float calculateMemberships(float x)
-    //    {
-    //        float result = 0;
-    //        foreach (var f in _f)
-    //        {
-    //            if (x >= f[0] )
-    //            {
-    //                result = f[1];
-    //                break;
-    //            }
-    //        }
-    //        return result;
-    //    }
+            return T.Zero;
+        }
 
-
-
-    //}
+        public override List<T> Introduce()
+        {
+            return _steps;
+        }
+    }
 }

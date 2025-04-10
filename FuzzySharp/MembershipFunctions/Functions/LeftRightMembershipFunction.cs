@@ -7,7 +7,7 @@
         Func<T,T> leftFunc, 
         Func<T,T> rightFunc) : BaseMembershipFunction<T> where T : INumber<T>
     {
-        public override T CalculateMembership(T x)
+        protected override T CalculateMembership(T x)
         {
             return x < centre ? leftFunc(x / alpha) : rightFunc(x / beta);
         }
