@@ -12,6 +12,7 @@ using FuzzySharp.MembershipFunctions.Functions;
 using piedPiper.implementacje.obrazy;
 //using piedPiper.implementacje.Hipki;
 using piedPiper.implementacje.Hipki;
+using piedPiper.pipeline;
 
 
 
@@ -108,18 +109,49 @@ public partial class PipelineSystem
             Context ctx;
             //try
             //{
-            var result = pipeline.Execute(inputImagePath, out ctx); // Execute is part of IPipeline, which IBuildablePipeline inherits
+            string[] inputs = {"blurry-moon.tif","bonescan.tif"};
 
-            Console.WriteLine("\n--- Execution Summary ---");
-            Console.WriteLine($"Pipeline final result: {result}");
-            Console.WriteLine($"Pipeline execution took {ctx.ProcessTimeInMilliseconds} milliseconds");
-            Console.WriteLine("\n--- Execution Logs ---");
-            foreach (var log in ctx.Logs) { Console.WriteLine(log); }
-            //}
-            //catch (Exception ex) {
-            //    Console.WriteLine(ex);
-            //    /* ... error handling ... */ }
-            Console.WriteLine("\nPipeline execution finished.");
+
+            if (false )
+            {
+                foreach (var inputImagePath in inputs)
+                {
+                    Console.WriteLine($"Executing extended pipeline with input: {inputImagePath}");
+                    Console.WriteLine($"Expected final output type: {pipeline.GetType().GenericTypeArguments[2]}"); // Check the inferred type
+                    var result = pipeline.Execute(inputImagePath, out ctx); // Execute is part of IPipeline, which IBuildablePipeline inherits
+                    Console.WriteLine("\n--- Execution Summary ---");
+                    Console.WriteLine($"Pipeline final result: {result}");
+                    Console.WriteLine($"Pipeline execution took {ctx.ProcessTimeInMilliseconds} milliseconds");
+                    Console.WriteLine("\n--- Execution Logs ---");
+                    foreach (var log in ctx.Logs) { Console.WriteLine(log); }
+                    //}
+                    //catch (Exception ex) {
+                    //    Console.WriteLine(ex);
+                    //    /* ... error handling ... */ }
+                    Console.WriteLine("\nPipeline execution finished.");
+                }
+            }
+            else
+            {
+
+                List<PipelineExtensions.PipelineExecutionResult<string, string>> batchResults = pipeline.ExecuteBatchParallel(inputs,3); // Or ExecuteBatchParallel(imagePaths, 4) to limit to 4 threads
+
+                foreach (var item in batchResults)
+                {
+                    Console.WriteLine("\n--- Execution Summary ---");
+                    Console.WriteLine($"Pipeline final result: {item.Output}");
+                    Console.WriteLine($"Pipeline execution took {item.Context.ProcessTimeInMilliseconds} milliseconds");
+                    Console.WriteLine("\n--- Execution Logs ---");
+                    foreach (var log in item.Context.Logs)
+                    {
+                        Console.WriteLine(log);
+                    }
+
+                }
+            }
+
+
+          
         }
 
 
@@ -129,8 +161,8 @@ public partial class PipelineSystem
             //return;
             string a = "hipki ";
             a = "stringi";
-            //a = "obrazki";
-            
+            a = "obrazki";
+
             switch (a)
             {
                 case "hipki":
