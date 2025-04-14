@@ -74,7 +74,7 @@ public partial class PipelineSystem
                 .AppendProcessor(new HipekEyeProcessor()) // Called on IBuildablePipeline, returns IBuildablePipeline<float, string>
                 .AppendProcessor(new HipekHeightProcessor(0.5f, 0.7f, 1f))
                 .AppendProcessor(new HipekHairProcessor())
-                .AppendProcessor(new HipekOcenaOgolnaProcessor(2))
+                .AppendProcessor(new HipekOcenaOgolnaProcessor(0.7f))
 
                 ; // Called on IBuildablePipeline, returns IBuildablePipeline<float, int>
 
@@ -127,10 +127,10 @@ public partial class PipelineSystem
         {
             //mainforimaghes();
             //return;
-            string a = "hipki ";
-            a = "stringi";
+            string a = "hipki";
+            //a = "stringi";
             //a = "obrazki";
-            
+
             switch (a)
             {
                 case "hipki":

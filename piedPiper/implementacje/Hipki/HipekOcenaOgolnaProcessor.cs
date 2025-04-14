@@ -12,7 +12,7 @@ namespace piedPiper.implementacje.Hipki
     {
         private float passingScore = 0;
 
-        public HipekOcenaOgolnaProcessor(int passingScore)
+        public HipekOcenaOgolnaProcessor(float passingScore)
         {
             this.passingScore = passingScore;
         }
