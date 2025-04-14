@@ -10,10 +10,12 @@ namespace piedPiper.implementacje.Hipki
 
 
         public HipekHeightProcessor(float a, float b, float c) : base(a, b, c)
+
         {
             triangleMembershipFunction = new TriangleMembershipFunction<float>(a, b, c);
         }
         public NormOperationAlgebraicSum<float> NormOperationAlgebraicSum { get; set; } = new NormOperationAlgebraicSum<float>();
+
 
         public ocenionyHipek Process(ocenionyHipek input, Context context)
         {
@@ -24,7 +26,9 @@ namespace piedPiper.implementacje.Hipki
 
 
 
+
             input.ocena = NormOperationAlgebraicSum.Calculate(  input.ocena  ,  triangleMembershipFunction.GetMembership(input.hipek.height));
+
 
 
             return input;

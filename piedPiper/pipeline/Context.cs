@@ -7,8 +7,7 @@
         {
             UniqueToken = Guid.NewGuid();
             Logs = new List<string>();
-            // Initialize start time here or let Execute handle it
-            // ProcessStartedAt = DateTime.Now; // Option 1: Initialize here
+
         }
 
         public Guid UniqueToken { get; }

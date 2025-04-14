@@ -4,6 +4,7 @@ public partial class PipelineSystem {
 
 
 
+
     public interface IBuildablePipeline<InputType, OutputType> : IPipeline<InputType, OutputType>
     {
         // Crucially, this returns the IBuildablePipeline interface itself, enabling chaining
