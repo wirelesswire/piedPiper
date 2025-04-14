@@ -71,9 +71,9 @@ public partial class PipelineSystem
             // This should now compile and work
             var pipeline = PipelineSystem.Pipeline // Create returns IBuildablePipeline
                 .Create(new HipekProcessorInput()) // Result: IBuildablePipeline<float, string>
-                .AppendProcessor(new HipekEyeProcessor(1)) // Called on IBuildablePipeline, returns IBuildablePipeline<float, string>
-                .AppendProcessor(new HipekHeightProcessor(0.5f, 0.7f, 1f, 1))
-                .AppendProcessor(new HipekHairProcessor(1))
+                .AppendProcessor(new HipekEyeProcessor()) // Called on IBuildablePipeline, returns IBuildablePipeline<float, string>
+                .AppendProcessor(new HipekHeightProcessor(0.5f, 0.7f, 1f))
+                .AppendProcessor(new HipekHairProcessor())
                 .AppendProcessor(new HipekOcenaOgolnaProcessor(2))
 
                 ; // Called on IBuildablePipeline, returns IBuildablePipeline<float, int>

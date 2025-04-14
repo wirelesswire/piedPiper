@@ -14,7 +14,7 @@ public partial class PipelineSystem
             currentProcessor = processor;
         }
 
-        // CHANGE THE RETURN TYPE HERE to IBuildablePipeline
+
         public IBuildablePipeline<InputType, ProcessorOutputType> AppendProcessor<ProcessorOutputType>(IProcessor<OutputType, ProcessorOutputType> processor)
         {
             // The concrete Pipeline class will implement IBuildablePipeline

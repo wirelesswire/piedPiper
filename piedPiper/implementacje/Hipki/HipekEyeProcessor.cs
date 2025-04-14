@@ -4,11 +4,9 @@ namespace piedPiper.implementacje.Hipki
 {
     public class HipekEyeProcessor : IProcessor<ocenionyHipek, ocenionyHipek>
     {
-        private float waga = 0;
 
-        public HipekEyeProcessor(float waga)
+        public HipekEyeProcessor()
         {
-            this.waga = waga;
         }
         public ocenionyHipek Process(ocenionyHipek input, Context context)
         {
@@ -19,7 +17,7 @@ namespace piedPiper.implementacje.Hipki
 
             if (input.hipek.eyeColor == "niebieski")
             {
-                input.ocena += 1 * waga;
+                input.ocena += 1 ;
             }
             return input;
         }

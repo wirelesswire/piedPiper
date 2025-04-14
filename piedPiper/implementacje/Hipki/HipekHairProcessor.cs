@@ -4,11 +4,9 @@ namespace piedPiper.implementacje.Hipki
 {
     public class HipekHairProcessor : IProcessor<ocenionyHipek, ocenionyHipek>
     {
-        private float waga = 0;
 
-        public HipekHairProcessor(int waga)
+        public HipekHairProcessor()
         {
-            this.waga = waga;
         }
         public ocenionyHipek Process(ocenionyHipek input, Context context)
         {
