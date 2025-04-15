@@ -1,23 +1,19 @@
 ﻿namespace FuzzySharp
 {
-    public class FuzzySet<T>(List<T> values) where T : INumber<T>
+    public class FuzzySet<T>(Dictionary<T, T> values) where T : INumber<T>
     {
-        public bool IsEmpty() => values.All(x => x == T.Zero);
+        public Dictionary<T, T> Values = values;
 
-        /*TODO
-         *
-         * Zbiór rozmyty A zawiera się w zbiorze rozmytym B,
-         * co zapisujemy A ⊂ B, wtedy i tylko wtedy,
-         * gdy μA(x) ≤ μB (x) dla każdego x ∈ X.
-         *
-         *
-         * Zbiór rozmyty A jest równy zbiorowi rozmytemu B,
-         * co zapisujemy A = B, wtedy i tylko wtedy,
-         * gdy μA(x) = μB (x) dla każdego x ∈ X.
-         */
+        public bool IsEmpty() => Values.All(x => x.Value == T.Zero);
 
-        public bool Contains(FuzzySet<T> set) => false;
+        public bool ContainsIn(FuzzySet<T> set) => Values.All(x => set.Values.TryGetValue(x.Key, out var compareValue) && compareValue > x.Value);
 
-        public bool IsEqual(FuzzySet<T> set) => false;
+        public bool IsEqualTo(FuzzySet<T> set) => Values.All(x => set.Values.TryGetValue(x.Key, out var compareValue) && compareValue == x.Value);
+
+        public Dictionary<T, T> GetSupport() => Values.Where(x => x.Value > T.Zero).ToDictionary();
+
+        public T? GetHeight() => Values.Max(x => x.Value);
+
+        public Dictionary<T, T> CrossSection(T alpha) => Values.Where(x => x.Value > alpha).ToDictionary();
     }
 }
