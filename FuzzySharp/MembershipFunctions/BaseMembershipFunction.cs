@@ -20,14 +20,14 @@
             return membershipValue; 
         }
 
-        public T Fuzzyficate(T x)
+        public T Fuzzyficate(T x, double power)
         {
-            return x * x;
+            return T.CreateTruncating(double.Pow(double.CreateTruncating(x),power));
         }
 
-        public T Defuzzyficate(T x)
+        public T Defuzzyficate(T x, int root)
         {
-            return T.CreateTruncating(Math.Sqrt(double.CreateTruncating(x)));
+            return T.CreateTruncating(double.RootN(double.CreateTruncating(x), root));
         }
 
         public T GetComplement(T x)
