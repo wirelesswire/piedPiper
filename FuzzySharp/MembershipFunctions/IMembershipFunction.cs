@@ -5,5 +5,11 @@
         public T GetMembership(T x);
 
         public List<T> Introduce();
+
+        public T Fuzzyficate(T x);
+
+        public T Defuzzyficate(T x);
+
+        public T GetComplement(T x);
     }
 }

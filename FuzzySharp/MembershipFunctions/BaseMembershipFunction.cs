@@ -20,6 +20,21 @@
             return membershipValue; 
         }
 
+        public T Fuzzyficate(T x)
+        {
+            return x * x;
+        }
+
+        public T Defuzzyficate(T x)
+        {
+            return T.CreateTruncating(Math.Sqrt(double.CreateTruncating(x)));
+        }
+
+        public T GetComplement(T x)
+        {
+            return T.One - GetMembership(x);
+        }
+
         protected abstract T CalculateMembership(T x);
 
         protected bool OutOfBorders(T x, T bottom, T top) => x < bottom || x > top;
