@@ -67,12 +67,14 @@ public partial class PipelineSystem
 
             Console.WriteLine("Building extended pipeline with direct chaining (modified design)...");
 
-            var pipeline = PipelineSystem.Pipeline 
-                .Create(new HipekProcessorInput()) 
-                .AppendProcessor(new HipekEyeProcessor(1)) 
-                .AppendProcessor(new HipekHeightProcessor(0.5f, 0.7f, 1f, 1))
-                .AppendProcessor(new HipekHairProcessor(1))
-                .AppendProcessor(new HipekOcenaOgolnaProcessor(2))
+            // This should now compile and work
+            var pipeline = PipelineSystem.Pipeline // Create returns IBuildablePipeline
+                .Create(new HipekProcessorInput()) // Result: IBuildablePipeline<float, string>
+                .AppendProcessor(new HipekEyeProcessor()) // Called on IBuildablePipeline, returns IBuildablePipeline<float, string>
+                .AppendProcessor(new HipekHeightProcessor(0.5f, 0.7f, 1f))
+                .AppendProcessor(new HipekHairProcessor())
+                .AppendProcessor(new HipekOcenaOgolnaProcessor(0.7f))
+
 
                 ; 
 
@@ -163,9 +165,12 @@ public partial class PipelineSystem
 
         public static void Main()
         {
-            string a = "hipki ";
-            a = "stringi";
-            a = "obrazki";
+            //mainforimaghes();
+            //return;
+            string a = "hipki";
+            //a = "stringi";
+            //a = "obrazki";
+
 
             switch (a)
             {

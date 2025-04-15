@@ -1,7 +1,7 @@
 ﻿// --- Inside PipelineSystem Class ---
 
-public partial class PipelineSystem
-{
+public partial class PipelineSystem { 
+
 
 
 

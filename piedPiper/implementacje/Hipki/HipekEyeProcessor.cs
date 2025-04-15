@@ -1,15 +1,16 @@
-﻿using static PipelineSystem;
+﻿using FuzzySharp.Operators.SNorm;
+using static PipelineSystem;
 
 namespace piedPiper.implementacje.Hipki
 {
     public class HipekEyeProcessor : IProcessor<ocenionyHipek, ocenionyHipek>
     {
-        private float waga = 0;
 
-        public HipekEyeProcessor(float waga)
+        public HipekEyeProcessor()
         {
-            this.waga = waga;
         }
+        public NormOperationAlgebraicSum<float> NormOperationAlgebraicSum { get; set; } = new NormOperationAlgebraicSum<float>();
+
         public ocenionyHipek Process(ocenionyHipek input, Context context)
         {
             if (input == null)
@@ -19,8 +20,13 @@ namespace piedPiper.implementacje.Hipki
 
             if (input.hipek.eyeColor == "niebieski")
             {
-                input.ocena += 1 * waga;
+                input.ocena =  NormOperationAlgebraicSum.Calculate(input.ocena,1);
             }
+            else
+            {
+                input.ocena = NormOperationAlgebraicSum.Calculate(input.ocena, 0);
+            }
+
             return input;
         }
     }
