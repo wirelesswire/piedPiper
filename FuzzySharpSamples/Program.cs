@@ -36,6 +36,26 @@ namespace FuzzySharpSamples
             }
 
             Console.WriteLine("Hello, World!");
+
+            var dictionary = new Dictionary<float, float>();
+            var dictionary2 = new Dictionary<float, float>();
+
+            dictionary.Add(1,1);
+            dictionary.Add(2,2);
+            dictionary2.Add(3, 3);
+            dictionary2.Add(4, 4);
+
+            float Func(float arg1, float arg2)
+            {
+                return Math.Abs((arg1 - arg2) / (arg1*arg2));
+            }
+
+            var fuzzySet1 = new FuzzySet<float>(dictionary);
+            var fuzzySet2 = new FuzzySet<float>(dictionary2);
+            var fuzzyRelation = new FuzzyRelation<float>(fuzzySet1, fuzzySet2, Func);
+
+            fuzzyRelation.CalculateRelation(1, 3);
+            fuzzyRelation.CalculateRelation(1, 2);
         }
 
         public static int UseSampleClass() 
