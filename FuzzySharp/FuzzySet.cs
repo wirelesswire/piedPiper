@@ -1,4 +1,6 @@
-﻿namespace FuzzySharp
+﻿using System.Xml.XPath;
+
+namespace FuzzySharp
 {
     public class FuzzySet<T>(Dictionary<T, T> values) where T : INumber<T>
     {
@@ -15,5 +17,7 @@
         public T? GetHeight() => Values.Max(x => x.Value);
 
         public Dictionary<T, T> CrossSection(T alpha) => Values.Where(x => x.Value > alpha).ToDictionary();
+
+        public FuzzySet<T> GetCompletionSet() => new (Values.ToDictionary(pair => pair.Key, pair => T.One - pair.Value));
     }
 }
