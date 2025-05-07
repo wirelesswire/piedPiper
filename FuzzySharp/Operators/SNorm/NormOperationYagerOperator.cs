@@ -1,6 +1,6 @@
 ﻿namespace FuzzySharp.Operators.SNorm
 {
-    internal class NormOperationYagerOperator<T>(double b) : INormOperation<T> where T : INumber<T>
+    public class NormOperationYagerOperator<T>(double b) : INormOperation<T> where T : INumber<T>
     {
         public T Calculate(T x, T y)
         {
