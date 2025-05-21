@@ -11,15 +11,13 @@ namespace DrawingSamples
 {
     public partial class Form1 : Form
     {
-        private static float LeftFunc(float x)
-        {
-            return float.CreateTruncating(Math.Abs(Math.Cos(x)));
-        }
+        private static float LeftFunc(float x) => float.CreateTruncating(Math.Abs(Math.Cos(x)));
 
-        private static float RightFunc(float x)
-        {
-            return float.CreateTruncating(Math.Abs(Math.Sin(x)));
-        }
+        private static float RightFunc(float x) => float.CreateTruncating(Math.Abs(Math.Sin(x)));
+        
+        private static float LeftFuncOne(float x) => 1.0f;
+
+        private static float RightFuncOne(float x) => 1.0f;
 
         static IEnumerable<float> GenerateFloatRange(float start, float end, float step)
         {
@@ -89,17 +87,18 @@ namespace DrawingSamples
 
         private static Dictionary<string, IMembershipFunction<float>> membershipFunctions = new()
         {
-            {"Bell", new BellMembershipFunction<float>(2f,1.5f,0f)},
+            {"Bell", new BellMembershipFunction<float>(3f,1.5f,0f)},
             {"Binary", new BinaryMembershipFunction<float>(0f, false)},
             {"Class L", new ClassLMembershipFunction<float>(-5f, 5f)},
             {"Class S", new ClassSMembershipFunction<float>(-5f, 5f)},
             {"Gamma", new GammaMembershipFunction<float>(-5f, 5f)},
-            {"Gauss", new GaussMembershipFunction<float>(0f, 5f, 1f)},
+            {"Gauss", new GaussMembershipFunction<float>(0f, 1f, 1.5f)},
             {"Left-Right", new LeftRightMembershipFunction<float>(0f, 2f, 2f, LeftFunc, RightFunc)},
+            {"LR-One", new LeftRightMembershipFunction<float>(0f, 2f, 2f, LeftFuncOne, RightFuncOne)},
             {"Sigmoid", new SigmoidMembershipFunction<float>(0f, 2f)},
-            {"Step", new StepMembershipFunction<float>([-0.5f, 0f, 1f, 2.5f])},
-            {"Trapeze", new TrapezeMembershipFunction<float>(-5f, -2f, 2f, 5f)},
-            {"Triangle", new TriangleMembershipFunction<float>(-2f, 0f, 2f)},
+            {"Step", new StepMembershipFunction<float>([-8.0f, -5.0f, 0f, 1f, 8.0f])},
+            {"Trapeze", new TrapezeMembershipFunction<float>(-5f, -2f, 2f, 7f)},
+            {"Triangle", new TriangleMembershipFunction<float>(-2f, 0f, 2.7f)},
             {"Zadeh", new ZadehMembershipFunction<float>(0f)},
         };
 
@@ -130,19 +129,22 @@ namespace DrawingSamples
 
         private void buttonDrawDiagram_Click(object sender, EventArgs e)
         {
+            var fuzzySetFirstKey = comboBoxMembershipFunctionFirst.SelectedItem?.ToString() ?? "LR-One";
+            var fuzzySetSecondKey = comboBoxMembershipFunctionSecond.SelectedItem?.ToString() ?? "LR-One";
+
             var fuzzySetFirst = new FuzzySet<float>(dataRange
                 .ToDictionary(
                     x => x,
-                    x => membershipFunctions[comboBoxMembershipFunctionFirst.SelectedItem.ToString()].GetMembership(x)
+                    x => membershipFunctions[fuzzySetFirstKey].GetMembership(x)
                 ));
 
             var fuzzySetSecond = new FuzzySet<float>(dataRange
                 .ToDictionary(
                     x => x,
-                    x => membershipFunctions[comboBoxMembershipFunctionSecond.SelectedItem.ToString()].GetMembership(x)
+                    x => membershipFunctions[fuzzySetSecondKey].GetMembership(x)
                 ));
 
-            var combine = Combine(fuzzySetFirst, fuzzySetSecond, normOperations[comboBoxOperator.SelectedItem.ToString()]);
+            var combine = Combine(fuzzySetFirst, fuzzySetSecond, normOperations[comboBoxOperator.SelectedItem?.ToString() ?? "Min"]);
 
             Bitmap fuzzyImage = DrawFuzzySet(combine);
 

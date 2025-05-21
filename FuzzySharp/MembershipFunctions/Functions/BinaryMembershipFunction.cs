@@ -5,8 +5,8 @@
         protected override T CalculateMembership(T x)
         {
             return inclusive ? 
-                (x <= crossPoint ? T.One : T.Zero) : 
-                (x < crossPoint ? T.One : T.Zero);
+                (x >= crossPoint ? T.One : T.Zero) : 
+                (x > crossPoint ? T.One : T.Zero);
         }
 
         public override List<T> Introduce()

@@ -40,7 +40,7 @@
             // 
             pictureBoxDiagram.Location = new Point(12, 41);
             pictureBoxDiagram.Name = "pictureBoxDiagram";
-            pictureBoxDiagram.Size = new Size(375, 273);
+            pictureBoxDiagram.Size = new Size(620, 302);
             pictureBoxDiagram.TabIndex = 0;
             pictureBoxDiagram.TabStop = false;
             // 
@@ -73,9 +73,9 @@
             // 
             // buttonDrawDiagram
             // 
-            buttonDrawDiagram.Location = new Point(12, 320);
+            buttonDrawDiagram.Location = new Point(12, 349);
             buttonDrawDiagram.Name = "buttonDrawDiagram";
-            buttonDrawDiagram.Size = new Size(375, 23);
+            buttonDrawDiagram.Size = new Size(620, 23);
             buttonDrawDiagram.TabIndex = 4;
             buttonDrawDiagram.Text = "Draw";
             buttonDrawDiagram.UseVisualStyleBackColor = true;
@@ -85,7 +85,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(405, 356);
+            ClientSize = new Size(648, 384);
             Controls.Add(buttonDrawDiagram);
             Controls.Add(comboBoxOperator);
             Controls.Add(comboBoxMembershipFunctionSecond);

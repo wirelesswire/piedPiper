@@ -13,11 +13,11 @@
 
         protected override T CalculateMembership(T x)
         {
-            foreach (var step in _steps.Select((value, i) => new { i, value }))
+            foreach (var step in _steps.Select((value, i) => new { value, i }))
             {
                 if (x >= step.value)
                 {
-                    return T.CreateTruncating((_steps.Count - step.i) * (1 / _steps.Count));
+                    return T.CreateTruncating((_steps.Count - step.i) * (1.0f / _steps.Count));
                 }
             }
 
