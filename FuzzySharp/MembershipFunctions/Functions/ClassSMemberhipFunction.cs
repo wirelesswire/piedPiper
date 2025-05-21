@@ -36,7 +36,7 @@
                 return T.One;
             }
 
-            var two = (T.One + T.One);
+            var two = T.One + T.One;
 
             if (_bottomBorder < x && x <= (_bottomBorder + _topBorder) / two)
             {
