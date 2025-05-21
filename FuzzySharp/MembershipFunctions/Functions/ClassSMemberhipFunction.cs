@@ -28,12 +28,12 @@
         {
             if (x < _bottomBorder)
             {
-                return T.One;
+                return T.Zero;
             }
 
             if (x >= _topBorder)
             {
-                return T.Zero;
+                return T.One;
             }
 
             var two = (T.One + T.One);

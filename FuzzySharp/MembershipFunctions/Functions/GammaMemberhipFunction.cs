@@ -36,7 +36,8 @@
                 return T.One;
             }
 
-            return (x - _bottomBorder) / (_topBorder - x);
+            var result = (x - _bottomBorder) / (_topBorder - x);
+            return result > T.One ? T.One : result;
         }
 
         public override List<T> Introduce()
