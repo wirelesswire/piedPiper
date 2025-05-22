@@ -26,13 +26,11 @@
 
         protected override T CalculateMembership(T x)
         {
-            var val = Math.Exp(-(1.0f / 2.0f)
-                               * Math.Pow(
-                                   Math.Abs(
-                                       double.CreateTruncating((x - _centre) / _width)),
-                                   double.CreateTruncating(_factor)));
-
-            return T.CreateTruncating(val);
+            return T.CreateTruncating(Math.Exp(-(1.0f / 2.0f) 
+                                               * Math.Pow(
+                                                   Math.Abs(
+                                                       double.CreateTruncating((x - _centre) / _width)),
+                                                   double.CreateTruncating(_factor))));
         }
 
         public override List<T> Introduce()
