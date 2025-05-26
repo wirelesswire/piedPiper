@@ -16,11 +16,6 @@ namespace FuzzySharpSamples
             BaseLogicSample();
         }
 
-        public static int UseSampleClass() 
-        {
-            return ExampleClass.Add(5, 10);
-        }
-
         public static void BaseMembershipSample()
         {
             float LeftFunc(float x) => float.CreateTruncating(Math.Abs(Math.Cos(x)));
@@ -90,53 +85,40 @@ namespace FuzzySharpSamples
 
             var fastRule = new FuzzyCondition<float>("fastRule", (x) => x[0],1);
 
-            var bigRule = new FuzzyCondition<float>("bigRule", (x) =>
-            {
-                var operation = new NormOperationMax<float>();
-                return operation.Calculate(x[0], x[1]);
-            },2);
+            var bigRule = new FuzzyCondition<float>("bigRule", x =>  NormOperationMax<float>.Calculate(x[0], x[1]),2);
 
             var tallRule = new FuzzyCondition<float>("tallRule", (x) => x[0],1);
 
-            var goodRugbyPlayerRule = new FuzzyCondition<float>("goodRugbyPlayerRule", (x) =>
-            {
-                var operation = new NormOperationMax<float>();
-                return operation.Calculate(x[0], x[1]);
-            },3);
+            var goodRugbyPlayerRule = new FuzzyCondition<float>("goodRugbyPlayerRule", x => NormOperationMax<float>.Calculate(x[0], x[1]),3);
 
             var fastFatTallRule = new FuzzyCondition<float>("fastFatTallRule", (x) =>
             {
-                var operation = new NormOperationMin<float>();
-                var fastAndFat = operation.Calculate(x[0], x[1]);
-                return operation.Calculate(fastAndFat, x[2]);
+                var fastAndFat = NormOperationMin<float>.Calculate(x[0], x[1]);
+                return NormOperationMin<float>.Calculate(fastAndFat, x[2]);
             }, 3);
 
-            var firstRule = FuzzyRuleBuilder<float>.If(tallCondition)
-                                                    .And(fatCondition)
-                                                    .Then(bigRule);
+            var fuzzyRuleBuilder = new FuzzyRuleBuilder<float>();
 
-            var secondRule = FuzzyRuleBuilder<float>.If(tallCondition)
-                                                    .Then(tallRule);
+            fuzzyRuleBuilder.If(tallCondition)
+                .And(fatCondition)
+                .Then(bigRule);
 
-            var thirdRule = FuzzyRuleBuilder<float>.If(fastCondition)
-                                                    .Then(fastRule);
+            fuzzyRuleBuilder.If(tallCondition)
+                .Then(tallRule);
 
-            var fourthRule = FuzzyRuleBuilder<float>.If(bigRule)
-                                                    .And(fastCondition)
-                                                    .Then(goodRugbyPlayerRule);
+            fuzzyRuleBuilder.If(fastCondition)
+                .Then(fastRule);
 
-            var fifthRule = FuzzyRuleBuilder<float>.If(fastCondition)
-                                                    .And(fatCondition)
-                                                    .And(tallCondition)
-                                                    .Then(fastFatTallRule);
+            fuzzyRuleBuilder.If(bigRule)
+                .And(fastCondition)
+                .Then(goodRugbyPlayerRule);
+
+            fuzzyRuleBuilder.If(fastCondition)
+                .And(fatCondition)
+                .And(tallCondition)
+                .Then(fastFatTallRule);
 
             var rules = LinguisticRules<float>.GetInstance();
-
-            rules.TryAddRule(firstRule);
-            rules.TryAddRule(secondRule);
-            rules.TryAddRule(thirdRule);
-            rules.TryAddRule(fourthRule);
-            rules.TryAddRule(fifthRule);
 
             Console.WriteLine(rules.Calculate("bigRule", 170f, 83f));
             Console.WriteLine(rules.Calculate("bigRule", 182f, 94f));
