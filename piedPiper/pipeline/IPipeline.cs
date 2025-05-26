@@ -1,6 +1,6 @@
 ﻿public partial class PipelineSystem
 {
-    // --- 3. Pipeline Interface (Nested) ---
+    // --- 3. PipelineBackwards Interface (Nested) ---
     public interface IPipeline<InputType, OutputType>
     {
         /// <summary>

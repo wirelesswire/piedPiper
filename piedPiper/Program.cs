@@ -20,7 +20,7 @@ public partial class PipelineSystem
 
     public class Program
     {
-        static string inputImagePath = "blurry-moon.tif"; // <--- CHANGE TO YOUR INPUT IMAGE PATH
+        static string inputImagePath = "blurry-moon.tif"; // <--- YOUR INPUT IMAGE PATH
         static string outputDirectory = "output";
         static string intermediateBaseName = "processed_step";
         static string finalBaseName = "final_output";
@@ -31,28 +31,23 @@ public partial class PipelineSystem
         {
             Console.WriteLine("Building extended pipeline with direct chaining (modified design)...");
 
-            // This should now compile and work
-            var finalPipeline = PipelineSystem.Pipeline // Create returns IBuildablePipeline
-                .Create(new PipelineSystem.FloatToStringProcessor()) // Result: IBuildablePipeline<float, string>
-                .AppendProcessor(new PipelineSystem.RepeatStringProcessor()) // Called on IBuildablePipeline, returns IBuildablePipeline<float, string>
-                .AppendProcessor(new PipelineSystem.StringLengthProcessor()); // Called on IBuildablePipeline, returns IBuildablePipeline<float, int>
+            var finalPipeline = PipelineSystem.Pipeline 
+                .Create(new PipelineSystem.FloatToStringProcessor()) 
+                .AppendProcessor(new PipelineSystem.RepeatStringProcessor()) 
+                .AppendProcessor(new PipelineSystem.StringLengthProcessor()); 
 
             Console.WriteLine("Executing extended pipeline with input: 5.0f");
-            Console.WriteLine($"Expected final output type: {finalPipeline.GetType().GenericTypeArguments[2]}"); // Check the inferred type
+            Console.WriteLine($"Expected final output type: {finalPipeline.GetType().GenericTypeArguments[2]}"); 
 
 
             PipelineSystem.Context ctx;
-            //try
-            //{
-            int result = finalPipeline.Execute(5.0f, out ctx); // Execute is part of IPipeline, which IBuildablePipeline inherits
-
+            int result = finalPipeline.Execute(5.0f, out ctx); 
+            
             Console.WriteLine("\n--- Execution Summary ---");
             Console.WriteLine($"Pipeline final result: {result}");
             Console.WriteLine($"Pipeline execution took {ctx.ProcessTimeInMilliseconds} milliseconds");
             Console.WriteLine("\n--- Execution Logs ---");
             foreach (var log in ctx.Logs) { Console.WriteLine(log); }
-            //}
-            //catch (Exception ex) { /* ... error handling ... */ }
             Console.WriteLine("\nPipeline execution finished.");
         }
 
@@ -67,10 +62,9 @@ public partial class PipelineSystem
 
             Console.WriteLine("Building extended pipeline with direct chaining (modified design)...");
 
-            // This should now compile and work
-            var pipeline = PipelineSystem.Pipeline // Create returns IBuildablePipeline
-                .Create(new HipekProcessorInput()) // Result: IBuildablePipeline<float, string>
-                .AppendProcessor(new HipekEyeProcessor()) // Called on IBuildablePipeline, returns IBuildablePipeline<float, string>
+            IBuildablePipeline<Hipek,string> pipeline = PipelineSystem.Pipeline                
+                .Create(new HipekProcessorInput()) 
+                .AppendProcessor(new HipekEyeProcessor()) 
                 .AppendProcessor(new HipekHeightProcessor(0.5f, 0.7f, 1f))
                 .AppendProcessor(new HipekHairProcessor())
                 .AppendProcessor(new HipekOcenaOgolnaProcessor(0.7f))
@@ -81,8 +75,6 @@ public partial class PipelineSystem
             Console.WriteLine($"Expected final output type: {pipeline.GetType().GenericTypeArguments[2]}"); // Check the inferred type
 
             PipelineSystem.Context ctx;
-            //try
-            //{
             var result = pipeline.Execute(hipki[1], out ctx); 
 
             Console.WriteLine("\n--- Execution Summary ---");
@@ -90,8 +82,7 @@ public partial class PipelineSystem
             Console.WriteLine($"Pipeline execution took {ctx.ProcessTimeInMilliseconds} milliseconds");
             Console.WriteLine("\n--- Execution Logs ---");
             foreach (var log in ctx.Logs) { Console.WriteLine(log); }
-            //}
-            //catch (Exception ex) { /* ... error handling ... */ }
+            
             Console.WriteLine("\nPipeline execution finished.");
         }
 

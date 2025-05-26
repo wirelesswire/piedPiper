@@ -7,11 +7,9 @@ using static PipelineSystem;
 
 namespace piedPiper.implementacje.Hipki
 {
-
     public class HipekOcenaOgolnaProcessor : IProcessor<ocenionyHipek, string>
     {
         private float passingScore = 0;
-
         public HipekOcenaOgolnaProcessor(float passingScore)
         {
             this.passingScore = passingScore;

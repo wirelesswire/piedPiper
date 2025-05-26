@@ -24,15 +24,9 @@ namespace piedPiper.implementacje.Hipki
                 throw new ArgumentNullException("input");
             }
 
-
-
-
             input.ocena = NormOperationAlgebraicSum.Calculate(  input.ocena  ,  triangleMembershipFunction.GetMembership(input.hipek.height));
-
-
-
+            
             return input;
-
         }
     }
 

@@ -10,7 +10,6 @@ namespace piedPiper.implementacje.Hipki
         {
         }
         public NormOperationAlgebraicSum<float> NormOperationAlgebraicSum { get; set; } = new NormOperationAlgebraicSum<float>();
-
         public ocenionyHipek Process(ocenionyHipek input, Context context)
         {
             if (input == null)

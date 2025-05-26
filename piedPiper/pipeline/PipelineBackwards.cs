@@ -11,12 +11,12 @@ public partial class PipelineSystem
             return new TerminalPipeline<InputType, OutputType>(processor);
         }
     }
-    public class Pipeline<InputType, ProcessorInputType, OutputType> : PipelineBase<InputType, ProcessorInputType, OutputType>
+    public class PipelineBackwards<InputType, ProcessorInputType, OutputType> : PipelineBase<InputType, ProcessorInputType, OutputType>
     {
         // Reference to the previous part of the pipeline
         private readonly IPipeline<InputType, ProcessorInputType> previousPipeline;
 
-        public Pipeline(
+        public PipelineBackwards(
             IProcessor<ProcessorInputType, OutputType> processor,
             IPipeline<InputType, ProcessorInputType> previousPipeline)
             : base(processor) // Pass processor to base constructor
