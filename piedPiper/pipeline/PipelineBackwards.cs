@@ -3,14 +3,7 @@
 public partial class PipelineSystem
 {
 
-    public static class Pipeline
-    {
-        
-        public static IBuildablePipeline<InputType, OutputType> Create<InputType, OutputType>(IProcessor<InputType, OutputType> processor)
-        {
-            return new TerminalPipeline<InputType, OutputType>(processor);
-        }
-    }
+ 
     public class PipelineBackwards<InputType, ProcessorInputType, OutputType> : PipelineBase<InputType, ProcessorInputType, OutputType>
     {
         // Reference to the previous part of the pipeline
@@ -41,5 +34,11 @@ public partial class PipelineSystem
             return result;
         }
     }
+
+
+
+
+
+
 
 }
