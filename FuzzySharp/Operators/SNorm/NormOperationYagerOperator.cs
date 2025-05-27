@@ -8,5 +8,10 @@
                 Math.Pow((Math.Pow(double.CreateTruncating(x), b) + Math.Pow(double.CreateTruncating(y), b)),1 / b));
             return T.One < part ? T.One : part;
         }
+
+        static T INormOperation<T>.Calculate(T x, T y)
+        {
+            throw new Exception("Yager operator should not be used as static member.");
+        }
     }
 }

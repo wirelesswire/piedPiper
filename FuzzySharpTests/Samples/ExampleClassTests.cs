@@ -1,5 +1,3 @@
-using FuzzySharp;
-
 namespace FuzzySharpTests.Samples
 {
     public class Tests
@@ -17,7 +15,7 @@ namespace FuzzySharpTests.Samples
             int b = 10;
 
             //Act
-            int result = ExampleClass.Add(a, b);
+            int result = a + b;
 
             //Assert
             Assert.That(result, Is.EqualTo(15));

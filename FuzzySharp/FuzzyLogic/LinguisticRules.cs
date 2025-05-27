@@ -20,12 +20,6 @@
             }
         }
 
-        public static LinguisticRules<T> GetInstance(Dictionary<string, FuzzyRule<T>>? rules)
-        {
-            _instance ??= new LinguisticRules<T>(rules);
-            return _instance;
-        }
-
         public static LinguisticRules<T> GetInstance()
         {
             _instance ??= new LinguisticRules<T>(null);

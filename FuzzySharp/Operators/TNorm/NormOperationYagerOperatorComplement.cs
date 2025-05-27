@@ -11,5 +11,10 @@
             var min = T.One < part ? T.One : part;
             return T.One - min;
         }
+
+        static T INormOperation<T>.Calculate(T x, T y)
+        {
+            throw new Exception("Yager operator should not be used as static member.");
+        }
     }
 }
