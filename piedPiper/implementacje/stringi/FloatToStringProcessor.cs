@@ -1,9 +1,8 @@
-﻿// --- Inside PipelineSystem Class ---
+﻿using static PipelineSystem;
+using piedPiper.pipeline;
 
-
-public partial class PipelineSystem
+namespace piedPiper.implementacje.stringi
 {
-    // --- 8. Example Processors (Nested) ---
     public class FloatToStringProcessor : IProcessor<float, string>
     {
         public string Process(float input, Context context)

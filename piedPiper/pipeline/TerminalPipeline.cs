@@ -1,4 +1,4 @@
-﻿public partial class PipelineSystem
+﻿namespace piedPiper.pipeline
 {
     // Represents the first step in the pipeline
     public class TerminalPipeline<InputType, OutputType> : PipelineBase<InputType, InputType, OutputType>

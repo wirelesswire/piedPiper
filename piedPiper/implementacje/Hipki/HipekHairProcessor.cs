@@ -1,5 +1,6 @@
 ﻿using FuzzySharp.Operators.SNorm;
 using static PipelineSystem;
+using piedPiper.pipeline;
 
 namespace piedPiper.implementacje.Hipki
 {

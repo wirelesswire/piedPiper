@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using static PipelineSystem;
 //using System.Drawing.Common, Version = 0.0.0.0, Culture = neutral, PublicKeyToken = cc7b13ffcd2ddd51;
+using piedPiper.pipeline;
 
 namespace piedPiper.implementacje.obrazy
 {

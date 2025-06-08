@@ -1,9 +1,9 @@
 ﻿// --- Inside PipelineSystem Class ---
 
-public partial class PipelineSystem
+namespace piedPiper.pipeline
 {
 
- 
+
     public class PipelineBackwards<InputType, ProcessorInputType, OutputType> : PipelineBase<InputType, ProcessorInputType, OutputType>
     {
         // Reference to the previous part of the pipeline

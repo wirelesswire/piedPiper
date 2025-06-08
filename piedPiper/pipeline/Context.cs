@@ -1,6 +1,5 @@
-﻿public partial class PipelineSystem
+﻿namespace piedPiper.pipeline
 {
-    // --- 1. Context Class (Nested) ---
     public class Context
     {
         public Context()

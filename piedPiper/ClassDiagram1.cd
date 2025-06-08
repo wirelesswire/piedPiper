@@ -1,4 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="piedPiper.pipeline.Context" Collapsed="true">
+    <Position X="8.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAgAAABAAgAQAAAAAAAAAQAAAA=</HashCode>
+      <FileName>pipeline\Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="piedPiper.pipeline.PipelineSystem" Collapsed="true">
+    <Position X="10.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>pipeline\JoinProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="piedPiper.pipeline.Pipeline" Collapsed="true">
+    <Position X="12.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>pipeline\Pipeline.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="piedPiper.pipeline.PipelineBackwards&lt;InputType, ProcessorInputType, OutputType&gt;" Collapsed="true">
+    <Position X="6" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>pipeline\PipelineBackwards.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="piedPiper.pipeline.PipelineBase&lt;InputType, ProcessorInputType, OutputType&gt;" Collapsed="true">
+    <Position X="5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAQAAAAAAAACAQAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>pipeline\PipelineBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="piedPiper.pipeline.PipelineExtensions" Collapsed="true">
+    <Position X="8.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>pipeline\PipelineExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="piedPiper.pipeline.TerminalPipeline&lt;InputType, OutputType&gt;" Collapsed="true">
+    <Position X="3.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>pipeline\TerminalPipeline.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="piedPiper.pipeline.piedPiper.pipeline.IdentityProcessor&lt;T&gt;" BaseTypeListCollapsed="true">
+    <Position X="10.25" Y="3.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>pipeline\IdentityProcessor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="piedPiper.pipeline.piedPiper.pipeline.SplitProcessor&lt;TInput, TBranchOutput&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>pipeline\SplitProcessor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="piedPiper.pipeline.IBuildablePipeline&lt;InputType, OutputType&gt;" Collapsed="true">
+    <Position X="3.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>pipeline\IBuildablePipeline.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="piedPiper.pipeline.IPipeline&lt;InputType, OutputType&gt;" Collapsed="true">
+    <Position X="3.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>pipeline\IPipeline.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="piedPiper.pipeline.IProcessor&lt;InputType, OutputType&gt;" Collapsed="true">
+    <Position X="8.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>pipeline\IProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

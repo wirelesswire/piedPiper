@@ -1,4 +1,5 @@
 ﻿using static PipelineSystem;
+using piedPiper.pipeline;
 
 namespace piedPiper.implementacje.Hipki
 {
@@ -10,9 +11,4 @@ namespace piedPiper.implementacje.Hipki
         }
 
     }
-
-
-
-
-
 }
