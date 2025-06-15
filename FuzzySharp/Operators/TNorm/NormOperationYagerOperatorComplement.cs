@@ -1,8 +1,9 @@
 ﻿namespace FuzzySharp.Operators.TNorm
 {
-    public class NormOperationYagerOperatorComplement<T> (double b) : INormOperation<T> where T : INumber<T>
+    public class NormOperationYagerOperatorComplement<T> : INormOperation<NormOperationYagerOperatorComplement<T>, T>
+        where T : INumber<T>
     {
-        public T Calculate(T x, T y)
+        public T Calculate(T x, T y, double b)
         {
             var part = T.CreateTruncating
                 ((Math.Pow(double.CreateTruncating(T.One - x),b)) 
@@ -12,9 +13,9 @@
             return T.One - min;
         }
 
-        static T INormOperation<T>.Calculate(T x, T y)
+        public static T Calculate(T x, T y)
         {
-            throw new Exception("Yager operator should not be used as static member.");
+            throw new Exception("Yager operator require usage of override function");
         }
     }
 }

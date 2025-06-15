@@ -9,6 +9,8 @@ using FuzzySharp.Operators.TNorm;
 
 namespace DrawingSamples
 {
+    public delegate FuzzySet<float> FuzzySetCombiner(FuzzySet<float> a, FuzzySet<float> b);
+
     public partial class Form1 : Form
     {
         private static float LeftFunc(float x) => float.CreateTruncating(Math.Abs(Math.Cos(x)));
@@ -28,7 +30,10 @@ namespace DrawingSamples
             return result;
         }
 
-        public static FuzzySet<float> Combine(FuzzySet<float> a, FuzzySet<float> b, INormOperation<float> tNorm)
+        public static FuzzySet<float> Combine<TNorm>(
+            FuzzySet<float> a,
+            FuzzySet<float> b)
+            where TNorm : INormOperation<TNorm, float>
         {
             var combined = new Dictionary<float, float>();
 
@@ -36,12 +41,13 @@ namespace DrawingSamples
             {
                 if (b.Values.TryGetValue(kvp.Key, out var bValue))
                 {
-                    combined[kvp.Key] = tNorm.Calculate(kvp.Value, bValue);
+                    combined[kvp.Key] = TNorm.Calculate(kvp.Value, bValue);
                 }
             }
 
             return new FuzzySet<float>(combined);
         }
+
 
         public static Bitmap DrawFuzzySet(FuzzySet<float> set, int width = 600, int height = 300)
         {
@@ -102,22 +108,22 @@ namespace DrawingSamples
             {"Zadeh", new ZadehMembershipFunction<float>(0f)},
         };
 
-        private static readonly Dictionary<string, INormOperation<float>> normOperations = new()
+        public static readonly Dictionary<string, FuzzySetCombiner> NormCombines = new()
         {
-            { "Algebraic Product", new NormOperationAlgebraicProd<float>() },
-            { "Bounded Difference", new NormOperationBoundedDiff<float>() },
-            { "Drastic Product", new NormOperationDrasticProd<float>() },
-            { "Einstein Product", new NormOperationEinsteinProd<float>() },
-            { "Hamacher Product", new NormOperationHamacherProd<float>() },
-            { "Min", new NormOperationMin<float>() },
-            { "Yager T-Norm", new NormOperationYagerOperatorComplement<float>(2f)},
-            { "Algebraic Sum", new NormOperationAlgebraicSum<float>() },
-            { "Bounded Sum", new NormOperationBoundedSum<float>() },
-            { "Drastic Sum", new NormOperationDrasticSum<float>() },
-            { "Einstein Sum", new NormOperationEinsteinSum<float>() },
-            { "Hamacher Sum", new NormOperationHamacherSum<float>() },
-            { "Max", new NormOperationMax<float>() },
-            { "Yager S-Norm", new NormOperationYagerOperator<float>(2f) }
+            { "Min", (a, b) => Combine<NormOperationMin<float>>(a, b) },
+            { "Max", (a, b) => Combine<NormOperationMax<float>>(a, b) },
+            { "Algebraic Product", (a, b) => Combine<NormOperationAlgebraicProd<float>>(a, b) },
+            { "Bounded Difference", (a, b) => Combine<NormOperationBoundedDiff<float>>(a, b) },
+            { "Drastic Product", (a, b) => Combine<NormOperationDrasticProd<float>>(a, b) },
+            { "Einstein Product", (a, b) => Combine<NormOperationEinsteinProd<float>>(a, b) },
+            { "Hamacher Product", (a, b) => Combine<NormOperationHamacherProd<float>>(a, b) },
+            { "Yager T-Norm", (a, b) => Combine<NormOperationYagerOperatorComplement<float>>(a, b) },
+            { "Algebraic Sum", (a, b) => Combine<NormOperationAlgebraicSum<float>>(a, b) },
+            { "Bounded Sum", (a, b) => Combine<NormOperationBoundedSum<float>>(a, b) },
+            { "Drastic Sum", (a, b) => Combine<NormOperationDrasticSum<float>>(a, b) },
+            { "Einstein Sum", (a, b) => Combine<NormOperationEinsteinSum<float>>(a, b) },
+            { "Hamacher Sum", (a, b) => Combine<NormOperationHamacherSum<float>>(a, b) },
+            { "Yager S-Norm", (a, b) => Combine<NormOperationYagerOperator<float>>(a, b) },
         };
 
         private static IEnumerable<float> dataRange = GenerateFloatRange(-10f, 10f, 0.1f);
@@ -144,12 +150,16 @@ namespace DrawingSamples
                     x => membershipFunctions[fuzzySetSecondKey].GetMembership(x)
                 ));
 
-            var combine = Combine(fuzzySetFirst, fuzzySetSecond, normOperations[comboBoxOperator.SelectedItem?.ToString() ?? "Min"]);
 
-            Bitmap fuzzyImage = DrawFuzzySet(combine);
+            var selectedNorm = comboBoxOperator.SelectedItem?.ToString() ?? "Min";
 
-            pictureBoxDiagram.Image = fuzzyImage;
-            pictureBoxDiagram.SizeMode = PictureBoxSizeMode.AutoSize;
+            if (NormCombines.TryGetValue(selectedNorm, out var combineFunc))
+            {
+                var combinedSet = combineFunc(fuzzySetFirst, fuzzySetSecond);
+                Bitmap fuzzyImage = DrawFuzzySet(combinedSet);
+                pictureBoxDiagram.Image = fuzzyImage;
+                pictureBoxDiagram.SizeMode = PictureBoxSizeMode.AutoSize;
+            }
         }
     }
 }

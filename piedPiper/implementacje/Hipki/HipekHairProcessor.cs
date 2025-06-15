@@ -10,7 +10,6 @@ namespace piedPiper.implementacje.Hipki
         public HipekHairProcessor()
         {
         }
-        public NormOperationAlgebraicSum<float> NormOperationAlgebraicSum { get; set; } = new NormOperationAlgebraicSum<float>();
         public ocenionyHipek Process(ocenionyHipek input, Context context)
         {
             if (input == null)
@@ -21,12 +20,12 @@ namespace piedPiper.implementacje.Hipki
             if (input.hipek.eyeColor == "blond")
             {
                 //input.ocena += 1 * waga;
-                input.ocena = NormOperationAlgebraicSum.Calculate(input.ocena, 1);
+                input.ocena = NormOperationAlgebraicSum<float>.Calculate(input.ocena, 1);
             }
             else
             {
                 //input.ocena += 0 * waga;
-                input.ocena = NormOperationAlgebraicSum.Calculate(input.ocena, 0);
+                input.ocena = NormOperationAlgebraicSum<float>.Calculate(input.ocena, 0);
             }
             return input;
         }
