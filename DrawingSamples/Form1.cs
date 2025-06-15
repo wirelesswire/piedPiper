@@ -30,21 +30,6 @@ namespace DrawingSamples
             return result;
         }
 
-        //public static FuzzySet<float> Combine(FuzzySet<float> a, FuzzySet<float> b, INormOperation<float> tNorm)
-        //{
-        //    var combined = new Dictionary<float, float>();
-
-        //    foreach (var kvp in a.Values)
-        //    {
-        //        if (b.Values.TryGetValue(kvp.Key, out var bValue))
-        //        {
-        //            combined[kvp.Key] = tNorm.Calculate(kvp.Value, bValue);
-        //        }
-        //    }
-
-        //    return new FuzzySet<float>(combined);
-        //}
-
         public static FuzzySet<float> Combine<TNorm>(
             FuzzySet<float> a,
             FuzzySet<float> b)
