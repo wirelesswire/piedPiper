@@ -1,9 +1,14 @@
 ﻿// --- Inside PipelineSystem Class ---
 
-public partial class PipelineSystem
+// --- Inside PipelineSystem Class ---
+
+
+
+using piedPiper.pipeline.piedPiper.pipeline;
+
+namespace piedPiper.pipeline
 {
-    // 2. Modify PipelineBase
-    // Make it implement the new interface
+
     public abstract class PipelineBase<InputType, ProcessorInputType, OutputType> : IBuildablePipeline<InputType, OutputType>
     {
         protected IProcessor<ProcessorInputType, OutputType> currentProcessor;
@@ -17,11 +22,36 @@ public partial class PipelineSystem
 
         public IBuildablePipeline<InputType, ProcessorOutputType> AppendProcessor<ProcessorOutputType>(IProcessor<OutputType, ProcessorOutputType> processor)
         {
-            // The concrete Pipeline class will implement IBuildablePipeline
-            return new Pipeline<InputType, OutputType, ProcessorOutputType>(processor, this);
+            return new PipelineBackwards<InputType, OutputType, ProcessorOutputType>(processor, this);
         }
 
-        // Execute and ExecuteSubPipeline remain as they implement the base IPipeline part
+        public IBuildablePipeline<InputType, IEnumerable<TBranchOutput>> Split<TBranchOutput>(
+            params Func<IBuildablePipeline<OutputType, OutputType>, IBuildablePipeline<OutputType, TBranchOutput>>[] branchBuilders)
+        {
+            if (branchBuilders == null || !branchBuilders.Any())
+            {
+                throw new ArgumentException("At least one branch builder must be provided for a split operation.", nameof(branchBuilders));
+            }
+
+            var branchPipelines = new List<IPipeline<OutputType, TBranchOutput>>();
+
+            foreach (var builderFunc in branchBuilders)
+            {
+                // Create a starting point for each branch using an IdentityProcessor.
+                // This allows the branch builder to chain off of the current pipeline's OutputType.
+                var seedPipeline = Pipeline.Create(new IdentityProcessor<OutputType>());
+
+                // Build the full pipeline for this specific branch
+                var branchPipeline = builderFunc(seedPipeline);
+                branchPipelines.Add(branchPipeline);
+            }
+
+            // Create and append the SplitProcessor, which takes the current pipeline's output
+            // and executes all constructed branch pipelines in parallel.
+            var splitProcessor = new SplitProcessor<OutputType, TBranchOutput>(branchPipelines);
+            return AppendProcessor(splitProcessor);
+        }
+
         public OutputType Execute(InputType input, out Context context)
         {
             context = new Context();
@@ -31,7 +61,6 @@ public partial class PipelineSystem
             try
             {
                 result = ExecuteSubPipeline(input, context);
-                context.Log("Pipeline execution finished successfully.");
             }
             catch (Exception ex)
             {

@@ -1,6 +1,5 @@
-﻿public partial class PipelineSystem
+﻿namespace piedPiper.pipeline
 {
-    // --- 1. Context Class (Nested) ---
     public class Context
     {
         public Context()
@@ -28,7 +27,7 @@
 
         public void Log(string message)
         {
-            Logs.Add($"{DateTime.Now:O} [{UniqueToken}] - {message}");
+            Logs.Add($"{DateTime.Now:O} - {message}");
         }
     }
 }

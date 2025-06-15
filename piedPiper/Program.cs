@@ -1,9 +1,4 @@
-﻿
-
-
-
-
-using piedPiper;
+﻿using piedPiper;
 using System;
 using System.Collections.Generic;
 using FuzzySharp;
@@ -11,52 +6,84 @@ using System.Reflection.Metadata;
 using FuzzySharp.MembershipFunctions.Functions;
 using piedPiper.implementacje.obrazy;
 using piedPiper.implementacje.Hipki;
+using piedPiper.implementacje.stringi;
 using piedPiper.pipeline;
+using piedPiper.pipeline.piedPiper.pipeline;
 
-
-
-public partial class PipelineSystem
+public class PipelineSystem
 {
-
     public class Program
     {
-        static string inputImagePath = "blurry-moon.tif"; // <--- CHANGE TO YOUR INPUT IMAGE PATH
+        static string inputImagePath = "blurry-moon.tif";
         static string outputDirectory = "output";
         static string intermediateBaseName = "processed_step";
         static string finalBaseName = "final_output";
-
-
-
-        public static void stringiTest()
+        public static void Logger<IN, OUT>(IBuildablePipeline<IN, OUT> p, out Context ctx, IN input, OUT result, bool showLogs = false)
         {
-            Console.WriteLine("Building extended pipeline with direct chaining (modified design)...");
-
-            // This should now compile and work
-            var finalPipeline = PipelineSystem.Pipeline // Create returns IBuildablePipeline
-                .Create(new PipelineSystem.FloatToStringProcessor()) // Result: IBuildablePipeline<float, string>
-                .AppendProcessor(new PipelineSystem.RepeatStringProcessor()) // Called on IBuildablePipeline, returns IBuildablePipeline<float, string>
-                .AppendProcessor(new PipelineSystem.StringLengthProcessor()); // Called on IBuildablePipeline, returns IBuildablePipeline<float, int>
 
             Console.WriteLine("Executing extended pipeline with input: 5.0f");
-            Console.WriteLine($"Expected final output type: {finalPipeline.GetType().GenericTypeArguments[2]}"); // Check the inferred type
+            Console.WriteLine($"Expected final output type: {p.GetType().GenericTypeArguments[2]}");
 
+            result = p.Execute(input, out ctx);
 
-            PipelineSystem.Context ctx;
-            //try
-            //{
-            int result = finalPipeline.Execute(5.0f, out ctx); // Execute is part of IPipeline, which IBuildablePipeline inherits
 
             Console.WriteLine("\n--- Execution Summary ---");
             Console.WriteLine($"Pipeline final result: {result}");
             Console.WriteLine($"Pipeline execution took {ctx.ProcessTimeInMilliseconds} milliseconds");
-            Console.WriteLine("\n--- Execution Logs ---");
-            foreach (var log in ctx.Logs) { Console.WriteLine(log); }
-            //}
-            //catch (Exception ex) { /* ... error handling ... */ }
+            if (showLogs)
+            {
+                Console.WriteLine("\n--- Execution Logs ---");
+                foreach (var log in ctx.Logs) { Console.WriteLine(log); }
+
+            }
             Console.WriteLine("\nPipeline execution finished.");
         }
 
+        public static void stringiSplitTest()
+        {
+            var finalPipeline = Pipeline
+                .Create(new FloatToStringProcessor())
+                .AppendProcessor(new RepeatStringProcessor(2))
+                .Split(
+                    branch1 => branch1
+                         .AppendProcessor(new AddSuffixProcessor("ala")),
+                    branch2 => branch2
+                        .AppendProcessor(new AddPrefixProcessor("kota ma"))
+                )
+                .AppendProcessor(new CombineStringsJoinProcessor(" | "));
+            Context ctx;
+            string result = "";
+            Logger(finalPipeline, out ctx, 6, result,true);
+            string res = "";
+            finalPipeline = finalPipeline.AppendProcessor(new AppendStringProcessor("Lorem ipsum "));
+            Logger(finalPipeline, out ctx, 5, res);
+        }
+        public static void stringSimpleTest()
+        {
+            Console.WriteLine("--- Scenariusz Testowy Potoku Stringowego ---");
 
+            string initialInput = "Hello world! This is a test with some numbers 123.";
+            var stringPipeline = Pipeline.Create(new ToUpperCaseProcessor())
+                .AppendProcessor(new ReverseStringProcessor())
+                .AppendProcessor(new ReplaceSpacesWithUnderscoresProcessor())
+                .AppendProcessor(new AddPrefixProcessor("->START<-"))
+                .AppendProcessor(new AddSuffixProcessor("-END<-"))
+                .AppendProcessor(new RemoveDigitsProcessor());      
+            Console.WriteLine($"Początkowy input: '{initialInput}'\n");
+            Context context;
+            string finalOutput = null;
+
+            finalOutput = stringPipeline.Execute(initialInput, out context);
+
+            Console.WriteLine($"\nFinalny output potoku: '{finalOutput}'");
+
+            Console.WriteLine("\n--- Logi Potoku Stringowego ---");
+            foreach (var log in context.Logs)
+            {
+                Console.WriteLine(log);
+            }    
+
+        }
         public static void hipkiTest()
         {
             List<Hipek> hipki = new List<Hipek>
@@ -66,123 +93,55 @@ public partial class PipelineSystem
                 };
 
             Console.WriteLine("Building extended pipeline with direct chaining (modified design)...");
-
-            // This should now compile and work
-            var pipeline = PipelineSystem.Pipeline // Create returns IBuildablePipeline
-                .Create(new HipekProcessorInput()) // Result: IBuildablePipeline<float, string>
-                .AppendProcessor(new HipekEyeProcessor()) // Called on IBuildablePipeline, returns IBuildablePipeline<float, string>
+            IBuildablePipeline<Hipek, string> pipeline = Pipeline
+                .Create(new HipekProcessorInput())
+                .AppendProcessor(new HipekEyeProcessor())
                 .AppendProcessor(new HipekHeightProcessor(0.5f, 0.7f, 1f))
                 .AppendProcessor(new HipekHairProcessor())
                 .AppendProcessor(new HipekOcenaOgolnaProcessor(0.7f))
-
-
-                ; 
-
+                ;
             Console.WriteLine($"Expected final output type: {pipeline.GetType().GenericTypeArguments[2]}"); // Check the inferred type
-
-            PipelineSystem.Context ctx;
-            //try
-            //{
-            var result = pipeline.Execute(hipki[1], out ctx); 
-
-            Console.WriteLine("\n--- Execution Summary ---");
-            Console.WriteLine($"Pipeline final result: {result}");
-            Console.WriteLine($"Pipeline execution took {ctx.ProcessTimeInMilliseconds} milliseconds");
-            Console.WriteLine("\n--- Execution Logs ---");
-            foreach (var log in ctx.Logs) { Console.WriteLine(log); }
-            //}
-            //catch (Exception ex) { /* ... error handling ... */ }
-            Console.WriteLine("\nPipeline execution finished.");
-        }
-
-        public static void mainforimaghes()
-        {
-            var pipeline = Pipeline.Create(new PathToBitmapProcessor())
-                .AppendProcessor(new ConvolutionProcessor("srednia", new float[,] {
-                    { 1, 1, 1},
-                    { 1, 1, 1 },
-                    { 1, 1, 1} }, 1, 1))
-                .AppendProcessor(new LaplacianProcessor())
-                .AppendProcessor(new BitmapSaveProcessor(outputDirectory, intermediateBaseName, ".png"));
             Context ctx;
+            var result = pipeline.Execute(hipki[1], out ctx);
 
+        }     
 
-            string currentDirectory = Directory.GetCurrentDirectory();
+        public static void doSprawozdania(){
 
-            string searchPattern = "*.tif";
+            var p = Pipeline.Create(new AddPrefixProcessor(" ala ma kota "));
 
-            IEnumerable<string> tifFiles = Directory.EnumerateFiles(currentDirectory, searchPattern);
-
-            string[] inputs = {"blurry-moon.tif","bonescan.tif"};
-            inputs = tifFiles.ToArray();
-            DateTime start = DateTime.Now;  
-
-
-            if (false   )
-            {
-                foreach (var inputImagePath in inputs)
-                {
-                    Console.WriteLine($"Executing extended pipeline with input: {inputImagePath}");
-                    Console.WriteLine($"Expected final output type: {pipeline.GetType().GenericTypeArguments[2]}"); 
-                    var result = pipeline.Execute(inputImagePath, out ctx); 
-                    Console.WriteLine("\n--- Execution Summary ---");
-                    Console.WriteLine($"Pipeline final result: {result}");
-                    Console.WriteLine($"Pipeline execution took {ctx.ProcessTimeInMilliseconds} milliseconds");
-                    Console.WriteLine("\n--- Execution Logs ---");
-                    foreach (var log in ctx.Logs) { Console.WriteLine(log); }
-
-                    Console.WriteLine("\nPipeline execution finished.");
-                }
-            }
-            else
-            {
-
-                List<PipelineExtensions.PipelineExecutionResult<string, string>> batchResults = 
-                    pipeline.ExecuteBatchParallel(inputs).ToList(); 
-
-                foreach (var item in batchResults)
-                {
-                    Console.WriteLine("\n--- Execution Summary ---");
-                    Console.WriteLine($"Pipeline final result: {item.Output}");
-                    Console.WriteLine($"Pipeline execution took {item.Context.ProcessTimeInMilliseconds} milliseconds");
-                    Console.WriteLine("\n--- Execution Logs ---");
-                    foreach (var log in item.Context.Logs)
-                    {
-                        Console.WriteLine(log);
-                    }
-
-                }
-            }
-
-            DateTime end = DateTime.Now;
-
-            Console.WriteLine($"Total execution time of program: {(end - start).TotalMilliseconds} milliseconds");
-
-
+            Context c = new Context();
+            string result = p.Execute("tekst" , out c );
+            Console.WriteLine(result);
 
         }
 
-
-        public static void Main()
+    public static void Main()
         {
-            //mainforimaghes();
+            //doSprawka();
             //return;
             string a = "hipki";
-            //a = "stringi";
+            a = "stringi";
+            //a="stringSimpleTest";
             //a = "obrazki";
-
-
+            //a = "obrazki2";
             switch (a)
             {
                 case "hipki":
                     hipkiTest();
                     break;
+                case "stringSimpleTest":
+                    stringSimpleTest();
+                    break;
                 case "stringi":
-                    stringiTest();
+                    stringiSplitTest();
                     break;
-                case "obrazki":
-                    mainforimaghes();
-                    break;
+                //case "obrazki":
+                //    //mainforimaghes();
+                //    break;
+                //case "obrazki2":
+                //    mainforimages();
+                //    break;
                 default:
                     Console.WriteLine("Invalid input. Please enter 'hipki', 'stringi', or 'obrazki'.");
                     break;

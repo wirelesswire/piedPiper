@@ -12,7 +12,8 @@ using System.Drawing.Imaging; // Required using
 using System.IO; // Required usingusing System;
 using System.Collections.Generic;
 using System.IO;
-//using System.Drawing.Common, Version = 0.0.0.0, Culture = neutral, PublicKeyToken = cc7b13ffcd2ddd51;
+using System.Diagnostics.Metrics;
+using piedPiper.pipeline;
 
 namespace piedPiper.implementacje.obrazy
 {
@@ -28,6 +29,7 @@ namespace piedPiper.implementacje.obrazy
         private readonly string _baseFilename;
         private readonly string _extension; // e.g., ".png", ".jpg"
         private readonly ImageFormat _imageFormat;
+        private static int _counter = 0; // Simple counter for unique filenames
 
         /// <summary>
         /// Initializes the processor.
@@ -69,54 +71,50 @@ namespace piedPiper.implementacje.obrazy
             }
         }
 
-        public string Process(Bitmap inputBitmap, Context context)
+        
+    public string Process(System.Drawing.Bitmap bitmap, Context context)
         {
-            if (inputBitmap == null)
-            {
-                context.Log("ERROR: Input bitmap is null for BitmapSaveProcessor. Cannot save.");
-                // Decide: throw or return null? Returning null might break subsequent steps
-                // if they expect a valid path. Throwing is safer here.
-                throw new ArgumentNullException(nameof(inputBitmap), "Input Bitmap cannot be null for saving.");
-            }
+            // Use a unique name for each save operation based on context token and a counter
+            string fileName = $"{_baseFilename}_{context.UniqueToken.ToString().Substring(0, 4)}_{Interlocked.Increment(ref _counter)}{_extension}";
+            string fullPath = Path.Combine(_outputDirectory, fileName);
 
+            context.Log($"BitmapSaveProcessor: Saving image to '{fullPath}'.");
             try
             {
-                // Ensure output directory exists
-                if (!Directory.Exists(_outputDirectory))
-                {
-                    context.Log($"Creating output directory: {_outputDirectory}");
-                    Directory.CreateDirectory(_outputDirectory);
-                }
-
-                // Construct unique filename
-                string filename = $"{_baseFilename}_{context.UniqueToken}{_extension}";
-                string fullPath = Path.Combine(_outputDirectory, filename);
-
-                context.Log($"Attempting to save Bitmap ({inputBitmap.Width}x{inputBitmap.Height}) to: {fullPath} with format {_imageFormat}");
-
-                // Save the bitmap
-                inputBitmap.Save(fullPath, _imageFormat);
-
-                context.Log($"Bitmap successfully saved to: {fullPath}");
-
-                // Return the full path where the image was saved
-                return fullPath;
+                bitmap.Save(fullPath);
+                context.Log($"BitmapSaveProcessor: Image saved successfully.");
+                return fullPath; // Return the path to the saved image
             }
             catch (Exception ex)
             {
-                context.Log($"ERROR saving bitmap: {ex.Message}");
-                // Re-throw the exception to indicate pipeline failure
-                throw new IOException($"Failed to save bitmap to directory '{_outputDirectory}'. Reason: {ex.Message}", ex);
+                context.Log($"BitmapSaveProcessor: Failed to save image: {ex.Message}");
+                throw;
             }
-            // Note: We DO NOT dispose the inputBitmap here. The caller or a subsequent
-            // step (or final cleanup) is responsible for managing the bitmap's lifecycle.
-            // This processor just uses it to save a copy to disk.
+        }
+
+        // OPTIONAL: If you want to specify a name explicitly each time
+        public string Process(System.Drawing.Bitmap bitmap, Context context, string specificFileName)
+        {
+            string fullPath = Path.Combine(_outputDirectory, specificFileName);
+            context.Log($"BitmapSaveProcessor: Saving image to '{fullPath}'.");
+            try
+            {
+                bitmap.Save(fullPath);
+                context.Log($"BitmapSaveProcessor: Image saved successfully.");
+                return fullPath; // Return the path to the saved image
+            }
+            catch (Exception ex)
+            {
+                context.Log($"BitmapSaveProcessor: Failed to save image: {ex.Message}");
+                throw;
+            }
         }
     }
-
-
-
-
-
-
 }
+
+
+
+
+
+
+

@@ -1,4 +1,5 @@
 ﻿using static PipelineSystem;
+using piedPiper.pipeline;
 
 namespace piedPiper.implementacje.Hipki
 {
@@ -6,14 +7,8 @@ namespace piedPiper.implementacje.Hipki
     {
         public ocenionyHipek Process(Hipek input, Context context)
         {
-
             return new ocenionyHipek(input, 0);
         }
 
     }
-
-
-
-
-
 }
