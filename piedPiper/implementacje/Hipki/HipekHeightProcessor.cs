@@ -1,6 +1,7 @@
 ﻿using FuzzySharp.MembershipFunctions.Functions;
 using FuzzySharp.Operators.SNorm;
 using static PipelineSystem;
+using piedPiper.pipeline;
 
 namespace piedPiper.implementacje.Hipki
 {
@@ -24,15 +25,9 @@ namespace piedPiper.implementacje.Hipki
                 throw new ArgumentNullException("input");
             }
 
-
-
-
             input.ocena = NormOperationAlgebraicSum.Calculate(  input.ocena  ,  triangleMembershipFunction.GetMembership(input.hipek.height));
-
-
-
+            
             return input;
-
         }
     }
 

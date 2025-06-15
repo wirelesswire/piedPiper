@@ -1,4 +1,4 @@
-﻿public partial class PipelineSystem
+﻿namespace piedPiper.pipeline
 {
     // Represents the first step in the pipeline
     public class TerminalPipeline<InputType, OutputType> : PipelineBase<InputType, InputType, OutputType>
@@ -14,7 +14,6 @@
         {
             context.Log($"Executing terminal processor: {currentProcessor.GetType().Name}");
             var result = currentProcessor.Process(input, context);
-            context.Log($"Terminal processor finished.");
             return result;
         }
     }
