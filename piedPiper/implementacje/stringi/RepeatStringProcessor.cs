@@ -17,11 +17,9 @@ namespace piedPiper.implementacje.stringi
             if (string.IsNullOrEmpty(input))
             {
                 context.Log($"Input is null or empty, returning as is.");
-                return input; // Example of conditional processing
+                return input;
             }
-            //string result = input + input + input; // Example: Repeat 3 times
-            string result = "";
-            
+            string result = "";            
             for (int i = 0; i < times; i++)
             {
                 result += input;

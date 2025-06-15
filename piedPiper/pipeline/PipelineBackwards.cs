@@ -23,14 +23,13 @@ namespace piedPiper.pipeline
         /// </summary>
         public override OutputType ExecuteSubPipeline(InputType input, Context context)
         {
-            context.Log($"Executing previous pipeline segment(s)...");
+            //context.Log($"Executing previous pipeline segment(s)...");
             // 1. Execute the pipeline built so far
             var previousPipelineResult = previousPipeline.ExecuteSubPipeline(input, context);
 
             context.Log($"Executing intermediate processor: {currentProcessor.GetType().Name}");
             // 2. Process the result with the current processor
             var result = currentProcessor.Process(previousPipelineResult, context);
-            context.Log($"Intermediate processor finished.");
             return result;
         }
     }

@@ -5,13 +5,6 @@ using piedPiper.pipeline;
 
 namespace piedPiper.implementacje.obrazy
 {
-    // --- NEW IMAGE PROCESSORS ---
-
-    /// <summary>
-    /// Reads an image file from a path and converts it to a Bitmap.
-    /// Input: string (file path)
-    /// Output: Bitmap
-    /// </summary>
     public class PathToBitmapProcessor : IProcessor<string, Bitmap>
     {
         public Bitmap Process(string imagePath, Context context)

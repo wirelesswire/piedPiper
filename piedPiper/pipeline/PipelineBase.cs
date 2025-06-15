@@ -61,7 +61,6 @@ namespace piedPiper.pipeline
             try
             {
                 result = ExecuteSubPipeline(input, context);
-                context.Log("Pipeline execution finished successfully.");
             }
             catch (Exception ex)
             {

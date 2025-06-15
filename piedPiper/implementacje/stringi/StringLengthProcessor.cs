@@ -3,8 +3,7 @@ using piedPiper.pipeline;
 
 namespace piedPiper.implementacje.stringi
 {
-    // Add this class inside the PipelineSystem class, alongside the others
-    public class StringLengthProcessor : IProcessor<string, int> // Takes string, outputs int
+    public class StringLengthProcessor : IProcessor<string, int> 
     {
         public int Process(string input, Context context)
         {

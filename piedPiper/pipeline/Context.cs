@@ -27,7 +27,7 @@
 
         public void Log(string message)
         {
-            Logs.Add($"{DateTime.Now:O} [{UniqueToken}] - {message}");
+            Logs.Add($"{DateTime.Now:O} - {message}");
         }
     }
 }

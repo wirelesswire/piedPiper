@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace piedPiper.pipeline
+namespace piedPiper.pipeline.multiline
 {
     using System;
     using System.Collections.Generic;
@@ -82,7 +82,7 @@ namespace piedPiper.pipeline
                 if (inputs == null || !inputs.Any())
                 {
                     context.Log("PickFirstJoinProcessor: Input enumerable is empty or null, returning default.");
-                    return default(T);
+                    return default;
                 }
                 T first = inputs.First();
                 context.Log($"PickFirstJoinProcessor: Selected '{first}'.");
