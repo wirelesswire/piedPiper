@@ -1,7 +1,8 @@
 ﻿namespace FuzzySharp.Operators
 {
-    public interface INormOperation<T> where T : INumber<T>
+    public interface INormOperation<TSelf, T>
+        where TSelf : INormOperation<TSelf, T>
     {
-        public static abstract T Calculate(T x, T y);
+        static abstract T Calculate(T a, T b);
     }
 }

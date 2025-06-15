@@ -1,17 +1,19 @@
 ﻿namespace FuzzySharp.Operators.SNorm
 {
-    public class NormOperationYagerOperator<T>(double b) : INormOperation<T> where T : INumber<T>
+    public class NormOperationYagerOperator<T> : INormOperation<NormOperationYagerOperator<T>, T>
+        where T : INumber<T>
+
     {
-        public T Calculate(T x, T y)
+        public static T Calculate(T x, T y, double b)
         {
             var part = T.CreateTruncating(
                 Math.Pow((Math.Pow(double.CreateTruncating(x), b) + Math.Pow(double.CreateTruncating(y), b)),1 / b));
             return T.One < part ? T.One : part;
         }
 
-        static T INormOperation<T>.Calculate(T x, T y)
+        public static T Calculate(T x, T y)
         {
-            throw new Exception("Yager operator should not be used as static member.");
+            throw new Exception("Yager operator require usage of override function");
         }
     }
 }

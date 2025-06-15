@@ -1,6 +1,7 @@
 ﻿namespace FuzzySharp.Operators.SNorm
 {
-    public class NormOperationDrasticSum<T> : INormOperation<T> where T : INumber<T>
+    public class NormOperationDrasticSum<T> : INormOperation<NormOperationDrasticSum<T>, T>
+        where T : INumber<T>
     {
         public static T Calculate(T x, T y)
         {

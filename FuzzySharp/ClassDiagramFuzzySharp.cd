@@ -1,35 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="FuzzySharp.Comparators.BaseMembershipFunctionsComparator" Collapsed="true">
-    <Position X="41.75" Y="4" Width="1.5" />
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
+  <Class Name="FuzzySharp.Comparators.BaseMembershipFunctionsComparator">
+    <Position X="44.5" Y="10.5" Width="5.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Comparators\BaseMembershipFunctionsComparator.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FuzzySharp.FuzzyLogic.FuzzyCondition&lt;T&gt;" Collapsed="true">
-    <Position X="45.25" Y="4" Width="1.5" />
+  <Class Name="FuzzySharp.FuzzyLogic.FuzzyCondition&lt;T&gt;">
+    <Position X="50.25" Y="10.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>FuzzyLogic\FuzzyCondition.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FuzzySharp.FuzzyLogic.FuzzyRule&lt;T&gt;" Collapsed="true">
-    <Position X="48.75" Y="4" Width="1.5" />
+  <Class Name="FuzzySharp.FuzzyLogic.FuzzyRule&lt;T&gt;">
+    <Position X="40.75" Y="10.5" Width="3.5" />
     <TypeIdentifier>
-      <HashCode>YAAAAAAQAEAAAAACAQAAAAQAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAEAAQAACAAAAAAQAACAAAAAABAAAAAAAAAA=</HashCode>
       <FileName>FuzzyLogic\FuzzyRule.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FuzzySharp.FuzzyLogic.FuzzyRuleBuilder&lt;T&gt;" Collapsed="true">
-    <Position X="41.75" Y="5" Width="1.5" />
+  <Class Name="FuzzySharp.FuzzyLogic.FuzzyRuleBuilder&lt;T&gt;">
+    <Position X="44.5" Y="11.75" Width="4.75" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAACAAAAAABAAAAQAAAAAAAAAAAAAAAAABAAAAAEA=</HashCode>
       <FileName>FuzzyLogic\FuzzyRuleBuilder.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FuzzySharp.FuzzyLogic.LinguisticRules&lt;T&gt;" Collapsed="true">
-    <Position X="45.25" Y="5" Width="1.5" />
+  <Class Name="FuzzySharp.FuzzyLogic.LinguisticRules&lt;T&gt;">
+    <Position X="40.5" Y="13.75" Width="3.75" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAgAAAAAAAAAAAAABCAAAAAAAAABAAAQAAA=</HashCode>
       <FileName>FuzzyLogic\LinguisticRules.cs</FileName>
@@ -120,7 +120,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FuzzySharp.MembershipFunctions.BaseMembershipFunction&lt;T&gt;">
-    <Position X="26.75" Y="1.75" Width="3" />
+    <Position X="27.25" Y="1" Width="3" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAAAAAAAAEAEAEAAAAgAAQAAAAIAAAgAA=</HashCode>
       <FileName>MembershipFunctions\BaseMembershipFunction.cs</FileName>
@@ -128,7 +128,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="FuzzySharp.Operators.SNorm.NormOperationAlgebraicSum&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="48.75" Y="5" Width="1.5" />
+    <Position X="47" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\SNorm\NormOperationAlgebraicSum.cs</FileName>
@@ -136,7 +136,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FuzzySharp.Operators.SNorm.NormOperationBoundedSum&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="43.5" Y="6" Width="1.5" />
+    <Position X="43.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\SNorm\NormOperationBoundedSum.cs</FileName>
@@ -144,7 +144,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FuzzySharp.Operators.SNorm.NormOperationDrasticSum&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="47" Y="6" Width="1.5" />
+    <Position X="47" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\SNorm\NormOperationDrasticSum.cs</FileName>
@@ -152,7 +152,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FuzzySharp.Operators.SNorm.NormOperationEinsteinSum&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="41.75" Y="7" Width="1.5" />
+    <Position X="41.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\SNorm\NormOperationEinsteinSum.cs</FileName>
@@ -160,23 +160,16 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FuzzySharp.Operators.SNorm.NormOperationHamacherSum&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="45.25" Y="7" Width="1.5" />
+    <Position X="47" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\SNorm\NormOperationHamacherSum.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="FuzzySharp.Operators.SNorm.NormOperationMax&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="47" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Operators\SNorm\NormOperationMax.cs</FileName>
+      <NewMemberFileName>Operators\SNorm\NormOperationMax.cs</NewMemberFileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FuzzySharp.Operators.SNorm.NormOperationYagerOperator&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="41.75" Y="8" Width="1.5" />
+    <Position X="41.75" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\SNorm\NormOperationYagerOperator.cs</FileName>
@@ -184,7 +177,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FuzzySharp.Operators.TNorm.NormOperationAlgebraicProd&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="47" Y="5" Width="1.5" />
+    <Position X="45.25" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\TNorm\NormOperationAlgebraicProd.cs</FileName>
@@ -192,7 +185,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FuzzySharp.Operators.TNorm.NormOperationBoundedDiff&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="41.75" Y="6" Width="1.5" />
+    <Position X="41.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\TNorm\NormOperationBoundedDiff.cs</FileName>
@@ -200,7 +193,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FuzzySharp.Operators.TNorm.NormOperationDrasticProd&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="45.25" Y="6" Width="1.5" />
+    <Position X="45.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\TNorm\NormOperationDrasticProd.cs</FileName>
@@ -208,7 +201,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FuzzySharp.Operators.TNorm.NormOperationEinsteinProd&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="48.75" Y="6" Width="1.5" />
+    <Position X="48.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\TNorm\NormOperationEinsteinProd.cs</FileName>
@@ -216,7 +209,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FuzzySharp.Operators.TNorm.NormOperationHamacherProd&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="43.5" Y="7" Width="1.5" />
+    <Position X="43.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\TNorm\NormOperationHamacherProd.cs</FileName>
@@ -224,54 +217,40 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FuzzySharp.Operators.TNorm.NormOperationMin&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="48.75" Y="7" Width="1.5" />
+    <Position X="48.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\TNorm\NormOperationMin.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
+  <Class Name="FuzzySharp.FuzzyRelation&lt;T&gt;">
+    <Position X="44.5" Y="14.25" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAECAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>FuzzyRelation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuzzySharp.FuzzySet&lt;T&gt;">
+    <Position X="49.5" Y="12.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAEABAAAAAAAAAAgABAAAAAAgAAAAAgABAAAAA=</HashCode>
+      <FileName>FuzzySet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="FuzzySharp.Operators.TNorm.NormOperationYagerOperatorComplement&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="43.5" Y="8" Width="1.5" />
+    <Position X="43.5" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Operators\TNorm\NormOperationYagerOperatorComplement.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FuzzySharp.ExampleClass" Collapsed="true">
-    <Position X="43.5" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ExampleClass.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FuzzySharp.FuzzyRelation&lt;T&gt;" Collapsed="true">
-    <Position X="47" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAECAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
-      <FileName>FuzzyRelation.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FuzzySharp.FuzzySet&lt;T&gt;" Collapsed="true">
-    <Position X="43.5" Y="5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AABAAAAEABAAAAAAAAAAgABAAAAAAgAAAAAgABAAAAA=</HashCode>
-      <FileName>FuzzySet.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Interface Name="FuzzySharp.MembershipFunctions.IMembershipFunction&lt;T&gt;">
-    <Position X="30" Y="1.75" Width="1.5" />
+    <Position X="30.5" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAEAEAEAAAAgAAQAAAAAAAAAAA=</HashCode>
       <FileName>MembershipFunctions\IMembershipFunction.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="FuzzySharp.Operators.INormOperation&lt;T&gt;">
-    <Position X="43.5" Y="9.25" Width="4.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Operators\INormOperation.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
