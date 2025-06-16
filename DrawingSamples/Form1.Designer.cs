@@ -65,7 +65,7 @@
             // comboBoxOperator
             // 
             comboBoxOperator.FormattingEnabled = true;
-            comboBoxOperator.Items.AddRange(new object[] { "Algebraic Product", "Bounded Difference", "Drastic Product", "Einstein Product", "Hamacher Product", "Min", "Yager T-Norm", "Algebraic Sum", "Bounded Sum", "Drastic Sum", "Einstein Sum", "Hamacher Sum", "Max", "Yager S-Norm" });
+            comboBoxOperator.Items.AddRange(new object[] { "Algebraic Product", "Bounded Difference", "Drastic Product", "Einstein Product", "Hamacher Product", "Min", "Algebraic Sum", "Bounded Sum", "Drastic Sum", "Einstein Sum", "Hamacher Sum", "Max" });
             comboBoxOperator.Location = new Point(139, 12);
             comboBoxOperator.Name = "comboBoxOperator";
             comboBoxOperator.Size = new Size(121, 23);
@@ -92,7 +92,7 @@
             Controls.Add(comboBoxMembershipFunctionFirst);
             Controls.Add(pictureBoxDiagram);
             Name = "Form1";
-            Text = "Form1";
+            Text = "FuzzySharp Sample";
             ((System.ComponentModel.ISupportInitialize)pictureBoxDiagram).EndInit();
             ResumeLayout(false);
         }
