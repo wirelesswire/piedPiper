@@ -1,5 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Forms;
 using FuzzySharp;
 using FuzzySharp.MembershipFunctions;
 using FuzzySharp.MembershipFunctions.Functions;
@@ -41,7 +39,7 @@ namespace DrawingSamples
             {
                 if (b.Values.TryGetValue(kvp.Key, out var bValue))
                 {
-                    combined[kvp.Key] = TNorm.Calculate(kvp.Value, bValue);
+                        combined[kvp.Key] = TNorm.Calculate(kvp.Value, bValue);
                 }
             }
 
@@ -117,13 +115,11 @@ namespace DrawingSamples
             { "Drastic Product", (a, b) => Combine<NormOperationDrasticProd<float>>(a, b) },
             { "Einstein Product", (a, b) => Combine<NormOperationEinsteinProd<float>>(a, b) },
             { "Hamacher Product", (a, b) => Combine<NormOperationHamacherProd<float>>(a, b) },
-            { "Yager T-Norm", (a, b) => Combine<NormOperationYagerOperatorComplement<float>>(a, b) },
             { "Algebraic Sum", (a, b) => Combine<NormOperationAlgebraicSum<float>>(a, b) },
             { "Bounded Sum", (a, b) => Combine<NormOperationBoundedSum<float>>(a, b) },
             { "Drastic Sum", (a, b) => Combine<NormOperationDrasticSum<float>>(a, b) },
             { "Einstein Sum", (a, b) => Combine<NormOperationEinsteinSum<float>>(a, b) },
             { "Hamacher Sum", (a, b) => Combine<NormOperationHamacherSum<float>>(a, b) },
-            { "Yager S-Norm", (a, b) => Combine<NormOperationYagerOperator<float>>(a, b) },
         };
 
         private static IEnumerable<float> dataRange = GenerateFloatRange(-10f, 10f, 0.1f);
