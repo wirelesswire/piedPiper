@@ -47,8 +47,6 @@ namespace piedPiper.pipeline
 
                 try
                 {
-                    // Execute the entire pipeline for the current input item.
-                    // A new context is created internally by Execute.
                     output = pipeline.Execute(input, out context);
                 }
                 catch (Exception ex)

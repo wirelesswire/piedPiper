@@ -2,7 +2,6 @@
 
 namespace piedPiper.pipeline
 {
-    // --- 3. PipelineBackwards Interface (Nested) ---
     public interface IPipeline<InputType, OutputType>
     {
         /// <summary>
