@@ -19,7 +19,7 @@ namespace piedPiper.implementacje.Hipki
         {
             if (input.ocena >= passingScore)
             {
-                return "porządny obywatel";
+                return "";
             }
             else
             {

@@ -53,7 +53,7 @@ public class PipelineSystem
                 .AppendProcessor(new CombineStringsJoinProcessor(" | "));
             Context ctx;
             string result = "";
-            Logger(finalPipeline, out ctx, 6, result,true);
+            Logger(finalPipeline, out ctx, 6, result, true);
             string res = "";
             finalPipeline = finalPipeline.AppendProcessor(new AppendStringProcessor("Lorem ipsum "));
             Logger(finalPipeline, out ctx, 5, res);
@@ -68,7 +68,7 @@ public class PipelineSystem
                 .AppendProcessor(new ReplaceSpacesWithUnderscoresProcessor())
                 .AppendProcessor(new AddPrefixProcessor("->START<-"))
                 .AppendProcessor(new AddSuffixProcessor("-END<-"))
-                .AppendProcessor(new RemoveDigitsProcessor());      
+                .AppendProcessor(new RemoveDigitsProcessor());
             Console.WriteLine($"Początkowy input: '{initialInput}'\n");
             Context context;
             string finalOutput = null;
@@ -81,7 +81,7 @@ public class PipelineSystem
             foreach (var log in context.Logs)
             {
                 Console.WriteLine(log);
-            }    
+            }
 
         }
         public static void hipkiTest()
@@ -102,26 +102,82 @@ public class PipelineSystem
                 ;
             Console.WriteLine($"Expected final output type: {pipeline.GetType().GenericTypeArguments[2]}"); // Check the inferred type
             Context ctx;
-            var result = pipeline.Execute(hipki[1], out ctx);
+            //var result = pipeline.Execute(hipki[1], out ctx);
+            string result = "";
+            Logger(pipeline, out ctx, hipki[1], result, true);
+        }
 
-        }     
-
-        public static void doSprawozdania(){
+        public static void doSprawozdania()
+        {
 
             var p = Pipeline.Create(new AddPrefixProcessor(" ala ma kota "));
 
             Context c = new Context();
-            string result = p.Execute("tekst" , out c );
+            string result = p.Execute("tekst", out c);
             Console.WriteLine(result);
 
         }
+        public static void RunHipekFuzzyPipelineScenario()
+        {
+            Console.WriteLine("--- Scenariusz Testowy Potoku Fuzzy dla Hipków ---");
+            List<Hipek> hipki = new List<Hipek>
+        {
+            new Hipek("Jan Kowalski", 185, "niebieskie", "blond"), 
+            new Hipek("Piotr Nowak", 195, "brązowe", "czarne"),    
+            new Hipek("Marek Lis", 170, "piwne", "brązowe"),      
+            new Hipek("Tomek Wilk", 155, "niebieskie", "rude")    
+        };
 
-    public static void Main()
+            var hipekEvaluationPipeline = Pipeline.Create(new HipekValidatorProcessor()) // 1. Walidacja
+                .AppendProcessor(new HipekNormalizerProcessor())                         // 2. Normalizacja
+                .AppendProcessor(new HipekFuzzyEvaluatorProcessor())                     // 3. Ocena Rozmyta (zwraca ocenionyHipek)
+                .AppendProcessor(new EvaluatedHipekLoggerProcessor())                    // 4. Logowanie wyniku (przekazuje dalej ocenionyHipek)
+                .AppendProcessor(new ScoreCategorizerProcessor())                        // 5. Kategoryzacja (zwraca string)
+                .AppendProcessor(new FinalMessageBuilderProcessor());                    // 6. Budowa finalnej wiadomości (zwraca string)
+            foreach (var hipek in hipki)
+            {
+                Console.WriteLine($"\n--- Ocena Hipka: {hipek.name} ---");
+                Context context = null;
+                string finalMessage = null;
+                try
+                {
+                    finalMessage = hipekEvaluationPipeline.Execute(hipek, out context);
+
+                    Console.WriteLine($"\nWynik dla {hipek.name}: {finalMessage}");
+                    Console.WriteLine(context.Logs[context.Logs.Count - 4]);
+                    //Console.WriteLine("\n--- Logi Potoku ---");
+                    //foreach (var log in context.Logs)
+                    //{
+                    //    Console.WriteLine(log);
+                    //}
+                    //Console.WriteLine($"Całkowity czas wykonania dla {hipek.name}: {context.ProcessTimeInMilliseconds} ms.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"\nBłąd podczas oceny Hipka {hipek.name}: {ex.Message}");
+                    if (context != null)
+                    {
+                        Console.WriteLine("\n--- Logi Potoku (częściowe) ---");
+                        foreach (var log in context.Logs)
+                        {
+                            Console.WriteLine(log);
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("\n--- Koniec Scenariusza Testowego ---");
+        }
+
+
+
+
+        public static void Main()
         {
             //doSprawka();
             //return;
             string a = "hipki";
-            a = "stringi";
+            a = "hipkiFuzzy";
+            //a = "stringi";
             //a="stringSimpleTest";
             //a = "obrazki";
             //a = "obrazki2";
@@ -129,6 +185,9 @@ public class PipelineSystem
             {
                 case "hipki":
                     hipkiTest();
+                    break;
+                case "hipkiFuzzy":
+                    RunHipekFuzzyPipelineScenario();
                     break;
                 case "stringSimpleTest":
                     stringSimpleTest();
